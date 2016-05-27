@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">WalkLogger</string>
+
+    <string name="recording">Now Recording...</string>
+    <string name="recording_finish_dialog_title">Save</string>
+    <string name="recording_finish_dialog_content">Please set name</string>
+    <string name="recording_finish_positive">Save</string>
+    <string name="recording_finish_negative">Not Save</string>
+    <string name="recording_finish_neutral">Cancel</string>
+    <string name="title_activity_walk_history">WalkHistoryActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_maps">Map</string>
+</resources>
