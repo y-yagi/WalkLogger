@@ -2,6 +2,7 @@ package io.github.y_yagi.walklogger.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
@@ -11,6 +12,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.List;
 
@@ -23,6 +25,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private String mUuid;
+    private Walk mWalk;
     private static final String EXTRA_TRAVEL_UUID = "uuid";
 
     public static void startActivity(Context context, String uuid) {
@@ -58,16 +61,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        Realm realm = Realm.getDefaultInstance();
-        Walk walk = realm.where(Walk.class).equalTo("uuid", mUuid).findFirst();
-
-        GpsLog startLog = walk.gpsLogs.first();
-        GpsLog endLog = walk.gpsLogs.last();
+        setWalk();
+        GpsLog startLog = mWalk.gpsLogs.first();
+        GpsLog endLog = mWalk.gpsLogs.last();
         LatLng startPoint = new LatLng(startLog.getLatitude(), startLog.getLongitude());
         LatLng endPoint = new LatLng(endLog.getLatitude(), endLog.getLongitude());
 
         mMap.addMarker(new MarkerOptions().position(startPoint).title("Start"));
-        mMap.addMarker(new MarkerOptions().position(endPoint).title("end"));
+        mMap.addMarker(new MarkerOptions().position(endPoint).title("End"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startPoint, 15));
+        displayPolylines();
+    }
+
+    private void setWalk() {
+        Realm realm = Realm.getDefaultInstance();
+        mWalk = realm.where(Walk.class).equalTo("uuid", mUuid).findFirst();
+    }
+
+    private void displayPolylines() {
+        PolylineOptions rectOptions = new PolylineOptions().color(Color.RED);
+
+        for(GpsLog gpsLog : mWalk.gpsLogs) {
+            rectOptions = rectOptions.add(new LatLng(gpsLog.getLatitude(), gpsLog.getLongitude()));
+        }
+        mMap.addPolyline(rectOptions);
     }
 }
