@@ -59,6 +59,9 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         mIntentService = new Intent(this, LocationUpdates.class);
         mPendingIntent = PendingIntent.getService(this, 1, mIntentService, PendingIntent.FLAG_UPDATE_CURRENT);
 
+        // TODO: remove deleteRealmIfMigration
+        RealmConfiguration config = new RealmConfiguration.Builder(this).deleteRealmIfMigrationNeeded().build();
+        Realm.setDefaultConfiguration(config);
         mRealm = Realm.getDefaultInstance();
 
         buildGoogleApiClient();
