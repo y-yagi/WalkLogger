@@ -3,7 +3,6 @@ package io.github.y_yagi.walklogger.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -28,20 +27,17 @@ import java.util.Date;
 
 import at.markushi.ui.CircleButton;
 import io.github.y_yagi.walklogger.R;
-import io.github.y_yagi.walklogger.model.Walk;
+import io.github.y_yagi.walklogger.operation.MainActivityOperation;
 import io.github.y_yagi.walklogger.service.BackgroundLocationService;
 import io.github.y_yagi.walklogger.util.DateUtil;
-import io.github.y_yagi.walklogger.util.ServiceUtil;
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
-import io.realm.RealmResults;
-import io.realm.Sort;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
     private CircleButton mRecordButton;
     private CircleButton mStopButton;
     private TextView mRecordingText;
     private Realm mRealm;
+    private MainActivityOperation mOperation;
     public static final int REQUEST_LOCATION = 1;
 
     @Override
@@ -56,27 +52,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         setupDrawerAndToolBar();
 
+        mOperation = new MainActivityOperation(this);
+
         mRecordButton = (CircleButton) findViewById(R.id.record_button);
         mRecordButton.setOnClickListener(this);
         mStopButton = (CircleButton) findViewById(R.id.stop_button);
         mStopButton.setOnClickListener(this);
-        mRecordingText= (TextView) findViewById(R.id.recording_text);
+        mRecordingText = (TextView) findViewById(R.id.recording_text);
 
-        if (isRecording()) {
+        if (mOperation.isRecording()) {
             mRecordButton.setVisibility(View.INVISIBLE);
             mStopButton.setVisibility(View.VISIBLE);
             mRecordingText.setVisibility(View.VISIBLE);
         }
 
-        // TODO: remove deleteRealmIfMigration
-        RealmConfiguration config = new RealmConfiguration.Builder(this).deleteRealmIfMigrationNeeded().build();
-        Realm.setDefaultConfiguration(config);
-        mRealm = Realm.getDefaultInstance();
     }
 
     @Override
     public void onClick(View view) {
-        if (!isRecording()) {
+        if (!mOperation.isRecording()) {
             startService();
             setSensor();
             return;
@@ -89,10 +83,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onInput(MaterialDialog dialog, CharSequence input) {
                 String walkName = input.toString();
-                if (walkName.isEmpty())  {
+                if (walkName.isEmpty()) {
                     walkName = DateUtil.formatWithTime(new Date());
                 }
-                saveWalk(walkName);
+                mOperation.saveWalk(walkName);
             }
         });
 
@@ -111,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(MaterialDialog dialog, DialogAction which) {
                 // TODO: delete operation
                 stopService();
-                deleteWalkData();
+                mOperation.deleteWalkData();
             }
         });
 
@@ -151,15 +145,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
             @Override
-            public void onAccuracyChanged(Sensor sensor, int accuracy) {}
+            public void onAccuracyChanged(Sensor sensor, int accuracy) {
+            }
         }, sensor, SensorManager.SENSOR_DELAY_UI);
 
     }
-
-    private boolean isRecording() {
-        return ServiceUtil.isServiceRunning(this, BackgroundLocationService.class);
-    }
-
 
     private void setupDrawerAndToolBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -205,26 +195,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    private void saveWalk(String walkName) {
-        Walk walk = getWalk();
-        mRealm.beginTransaction();
-        walk.setName(walkName);
-        walk.setEnd(new Date());
-        mRealm.commitTransaction();
-    }
-
-    private void deleteWalkData() {
-        Walk walk = getWalk();
-
-        mRealm.beginTransaction();
-        walk.gpsLogs.deleteAllFromRealm();
-        walk.deleteFromRealm();
-        mRealm.commitTransaction();
-    }
-
-    private Walk getWalk() {
-        return mRealm.where(Walk.class).findAllSorted("start", Sort.DESCENDING).first();
     }
 }
