@@ -21,7 +21,11 @@ public class Walk extends RealmObject {
     public RealmList<GpsLog> gpsLogs;
 
     public String duration() {
-        return DateUtil.formatWithTime(this.start) + " 〜 " + DateUtil.formatWithTime(this.end);
+        String durationStr = DateUtil.formatWithTime(this.start) + " 〜 ";
+        if (this.end != null) {
+            durationStr += DateUtil.formatWithTime(this.end);
+        }
+        return  durationStr;
     }
 
     public String getName() {
