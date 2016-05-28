@@ -24,18 +24,24 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
+import java.util.Date;
+
 import at.markushi.ui.CircleButton;
 import io.github.y_yagi.walklogger.R;
+import io.github.y_yagi.walklogger.model.Walk;
 import io.github.y_yagi.walklogger.service.BackgroundLocationService;
+import io.github.y_yagi.walklogger.util.DateUtil;
 import io.github.y_yagi.walklogger.util.ServiceUtil;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
+import io.realm.Sort;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
     private CircleButton mRecordButton;
     private CircleButton mStopButton;
     private TextView mRecordingText;
-    private String mWalkName;
+    private Realm mRealm;
     public static final int REQUEST_LOCATION = 1;
 
     @Override
@@ -65,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // TODO: remove deleteRealmIfMigration
         RealmConfiguration config = new RealmConfiguration.Builder(this).deleteRealmIfMigrationNeeded().build();
         Realm.setDefaultConfiguration(config);
+        mRealm = Realm.getDefaultInstance();
     }
 
     @Override
@@ -78,10 +85,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         MaterialDialog.Builder materialBuilder = new MaterialDialog.Builder(this);
         materialBuilder.title(R.string.recording_finish_dialog_title);
         materialBuilder.content(R.string.recording_finish_dialog_content);
-        materialBuilder.input("", "", false, new MaterialDialog.InputCallback() {
+        materialBuilder.input("walk name", "", true, new MaterialDialog.InputCallback() {
             @Override
             public void onInput(MaterialDialog dialog, CharSequence input) {
-                mWalkName = input.toString();
+                String walkName = input.toString();
+                if (walkName.isEmpty())  {
+                    walkName = DateUtil.formatWithTime(new Date());
+                }
+                saveInputName(walkName);
             }
         });
 
@@ -92,7 +103,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(MaterialDialog dialog, DialogAction which) {
                 stopService();
-                // TODO: save operation
             }
         });
 
@@ -193,5 +203,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void saveInputName(String walkName) {
+        Walk walk = mRealm.where(Walk.class).findAllSorted("start", Sort.DESCENDING).first();
+        mRealm.beginTransaction();
+        walk.setName(walkName);
+        mRealm.commitTransaction();
     }
 }
