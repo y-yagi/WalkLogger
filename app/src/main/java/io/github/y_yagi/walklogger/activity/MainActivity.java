@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (walkName.isEmpty())  {
                     walkName = DateUtil.formatWithTime(new Date());
                 }
-                saveInputName(walkName);
+                saveWalk(walkName);
             }
         });
 
@@ -111,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(MaterialDialog dialog, DialogAction which) {
                 // TODO: delete operation
                 stopService();
+                deleteWalkData();
             }
         });
 
@@ -159,6 +160,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return ServiceUtil.isServiceRunning(this, BackgroundLocationService.class);
     }
 
+
     private void setupDrawerAndToolBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -205,10 +207,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
-    private void saveInputName(String walkName) {
-        Walk walk = mRealm.where(Walk.class).findAllSorted("start", Sort.DESCENDING).first();
+    private void saveWalk(String walkName) {
+        Walk walk = getWalk();
         mRealm.beginTransaction();
         walk.setName(walkName);
+        walk.setEnd(new Date());
         mRealm.commitTransaction();
+    }
+
+    private void deleteWalkData() {
+        Walk walk = getWalk();
+
+        mRealm.beginTransaction();
+        walk.gpsLogs.deleteAllFromRealm();
+        walk.deleteFromRealm();
+        mRealm.commitTransaction();
+    }
+
+    private Walk getWalk() {
+        return mRealm.where(Walk.class).findAllSorted("start", Sort.DESCENDING).first();
     }
 }

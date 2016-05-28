@@ -22,6 +22,7 @@ import java.util.UUID;
 
 import io.github.y_yagi.walklogger.model.GpsLog;
 import io.github.y_yagi.walklogger.model.Walk;
+import io.github.y_yagi.walklogger.util.LogUtil;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -31,7 +32,7 @@ import io.realm.RealmConfiguration;
 
 public class BackgroundLocationService extends Service implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
-    protected static final String TAG = "BLS";
+    private static final String TAG = LogUtil.makeLogTag(BackgroundLocationService.class);
 
     public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 10000;
     public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = UPDATE_INTERVAL_IN_MILLISECONDS / 2;
@@ -124,13 +125,16 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
     @Override
     public void onLocationChanged(Location location) {
         Log.e(TAG, "onLocationChanged");
-        mRealm.beginTransaction();
-        GpsLog gpsLog = mRealm.createObject(GpsLog.class);
-        gpsLog.setUuid(UUID.randomUUID().toString());
-        gpsLog.setLatitude(location.getLatitude());
-        gpsLog.setLongitude(location.getLongitude());
-        mWalk.gpsLogs.add(gpsLog);
-        mRealm.commitTransaction();
+
+        if (mWalk.isValid()) {
+            mRealm.beginTransaction();
+            GpsLog gpsLog = mRealm.createObject(GpsLog.class);
+            gpsLog.setUuid(UUID.randomUUID().toString());
+            gpsLog.setLatitude(location.getLatitude());
+            gpsLog.setLongitude(location.getLongitude());
+            mWalk.gpsLogs.add(gpsLog);
+            mRealm.commitTransaction();
+        }
     }
 
     @Override
@@ -147,10 +151,6 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
     public void onDestroy() {
         super.onDestroy();
         stopLocationUpdates();
-
-        mRealm.beginTransaction();
-        mWalk.setEnd(new Date());
-        mRealm.commitTransaction();
     }
 
     private void saveWalk() {
