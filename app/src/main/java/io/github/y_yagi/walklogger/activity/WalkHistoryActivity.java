@@ -87,6 +87,7 @@ public class WalkHistoryActivity extends AppCompatActivity
     private void displayWalkHistory() {
         RealmResults<Walk> walks = getWalks();
         LinearLayout layout = (LinearLayout) findViewById(R.id.walk_history);
+        layout.removeAllViews();
         for (Walk walk: walks) {
             CardView cardView;
             CardWalkBinding binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.card_walk, layout, false);
@@ -130,6 +131,7 @@ public class WalkHistoryActivity extends AppCompatActivity
                     realm.beginTransaction();
                     walk.setName(walkName);
                     realm.commitTransaction();
+                    displayWalkHistory();
                 }
             })
             .show();
@@ -148,6 +150,7 @@ public class WalkHistoryActivity extends AppCompatActivity
                         walk.gpsLogs.deleteAllFromRealm();
                         walk.deleteFromRealm();
                         realm.commitTransaction();
+                        displayWalkHistory();
                     }
                 })
                 .show();
