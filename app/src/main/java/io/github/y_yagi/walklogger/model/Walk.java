@@ -1,5 +1,7 @@
 package io.github.y_yagi.walklogger.model;
 
+import android.location.Location;
+
 import java.util.Date;
 
 import io.github.y_yagi.walklogger.util.DateUtil;
@@ -26,6 +28,19 @@ public class Walk extends RealmObject {
             durationStr += DateUtil.formatWithTime(this.end);
         }
         return  durationStr;
+    }
+
+    public String totalDistance() {
+        float[] apiResults = new float[3];
+        float totalDistance = 0;
+
+        for(int i = 0; i < gpsLogs.size() -1; i++)  {
+            GpsLog from = gpsLogs.get(i);
+            GpsLog to = gpsLogs.get(i+1);
+            Location.distanceBetween(from.getLatitude(), from.getLongitude(), to.getLatitude(), to.getLongitude(), apiResults);
+            totalDistance += apiResults[0];
+        }
+        return String.format("%.2fm", totalDistance);
     }
 
     public String getName() {
