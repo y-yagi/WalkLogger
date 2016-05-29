@@ -1,5 +1,6 @@
 package io.github.y_yagi.walklogger.service;
 
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -20,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
+import io.github.y_yagi.walklogger.R;
 import io.github.y_yagi.walklogger.model.GpsLog;
 import io.github.y_yagi.walklogger.model.Walk;
 import io.github.y_yagi.walklogger.util.LogUtil;
@@ -42,6 +45,7 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
     private Intent mIntentService;
     private PendingIntent mPendingIntent;
     private Realm mRealm;
+    private NotificationManager mNotificationManager;
     private Walk mWalk;
 
     IBinder mBinder = new LocalBinder();
@@ -66,6 +70,14 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
 
         buildGoogleApiClient();
         saveWalk();
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
+        builder.setContentTitle(getString(R.string.app_name));
+        builder.setContentText(getString(R.string.recording));
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        mNotificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+        mNotificationManager.notify(R.string.app_name, builder.build());
+        startForeground(R.string.app_name, builder.build());
     }
 
     @Nullable
