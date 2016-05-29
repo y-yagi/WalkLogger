@@ -107,14 +107,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mOperation.deleteWalkData();
             }
         });
-
-        materialBuilder.onNeutral(new MaterialDialog.SingleButtonCallback() {
-            @Override
-            public void onClick(MaterialDialog dialog, DialogAction which) {
-                // Do nothing
-                return;
-            }
-        });
         materialBuilder.show();
     }
 
