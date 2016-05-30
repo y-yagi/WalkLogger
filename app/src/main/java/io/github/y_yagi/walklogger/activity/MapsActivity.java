@@ -63,6 +63,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         setWalk();
+        if (mWalk.gpsLogs.isEmpty()) {
+            return;
+        }
         GpsLog startLog = mWalk.gpsLogs.first();
         GpsLog endLog = mWalk.gpsLogs.last();
         LatLng startPoint = new LatLng(startLog.getLatitude(), startLog.getLongitude());
