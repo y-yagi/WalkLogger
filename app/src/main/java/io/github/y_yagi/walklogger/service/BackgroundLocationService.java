@@ -47,6 +47,7 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
     private Realm mRealm;
     private NotificationManager mNotificationManager;
     private Walk mWalk;
+    private boolean mFirstValue = true;
 
     IBinder mBinder = new LocalBinder();
 
@@ -140,6 +141,12 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
     @Override
     public void onLocationChanged(Location location) {
         Log.e(TAG, "onLocationChanged");
+        // HACK: It ignored because it is often the first value values outside.
+        // This is unnecessary if the first to display a Google Map.
+        if (mFirstValue) {
+            mFirstValue = false;
+            return;
+        }
 
         if (mWalk.isValid()) {
             mRealm.beginTransaction();
