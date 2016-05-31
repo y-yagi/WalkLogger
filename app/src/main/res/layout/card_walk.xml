@@ -50,14 +50,14 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
             android:textSize="@dimen/text_small" />
 
         <TextView
-            android:id="@+id/distance"
+            android:id="@+id/info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/duration"
             android:layout_marginTop="@dimen/spacing_small"
             android:drawablePadding="@dimen/line_spacing_small"
             android:textColor="@color/gray"
-            android:text="@{walk.totalDistance()}"
+            android:text="@{walk.info()}"
             android:textSize="@dimen/text_small" />
     </RelativeLayout>
 </android.support.v7.widget.CardView>
