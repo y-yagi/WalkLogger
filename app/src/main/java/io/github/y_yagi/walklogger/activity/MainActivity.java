@@ -3,10 +3,6 @@ package io.github.y_yagi.walklogger.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
@@ -72,7 +68,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         if (!mOperation.isRecording()) {
             startService();
-            setSensor();
             return;
         }
 
@@ -124,22 +119,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRecordButton.setVisibility(View.VISIBLE);
         mStopButton.setVisibility(View.INVISIBLE);
         mRecordingText.setVisibility(View.INVISIBLE);
-    }
-
-    private void setSensor() {
-        SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        Sensor sensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
-        sensorManager.registerListener(new SensorEventListener() {
-            @Override
-            public void onSensorChanged(SensorEvent event) {
-                Log.i("TYPE_STEP_COUNTER", "" + (int) event.values[0]);
-            }
-
-            @Override
-            public void onAccuracyChanged(Sensor sensor, int accuracy) {
-            }
-        }, sensor, SensorManager.SENSOR_DELAY_UI);
-
     }
 
     private void setupDrawerAndToolBar() {

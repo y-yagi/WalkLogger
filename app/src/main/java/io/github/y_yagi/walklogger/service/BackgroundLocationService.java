@@ -4,6 +4,10 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.location.Location;
 import android.os.Binder;
 import android.os.Bundle;
@@ -47,6 +51,8 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
     private Realm mRealm;
     private NotificationManager mNotificationManager;
     private Walk mWalk;
+    private int mStartStepCount = -1;
+    private int mEndStepCount = 0;
     private boolean mFirstValue = true;
 
     IBinder mBinder = new LocalBinder();
@@ -71,6 +77,7 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
 
         buildGoogleApiClient();
         saveWalk();
+        setSensor();
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
         builder.setContentTitle(getString(R.string.app_name));
@@ -183,6 +190,25 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         mWalk.setUuid(UUID.randomUUID().toString());
         mWalk.setStart(d);
         mWalk.setName(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(d));
+        mWalk.setStepCount(mEndStepCount - mStartStepCount);
         mRealm.commitTransaction();
+    }
+
+    private void setSensor() {
+        SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        Sensor sensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+        sensorManager.registerListener(new SensorEventListener() {
+            @Override
+            public void onSensorChanged(SensorEvent event) {
+                if ( mStartStepCount == -1) {
+                    mStartStepCount = (int) event.values[0];
+                } else {
+                    mEndStepCount = (int) event.values[0];
+                }
+            }
+
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int accuracy) { }
+        }, sensor, SensorManager.SENSOR_DELAY_UI);
     }
 }
