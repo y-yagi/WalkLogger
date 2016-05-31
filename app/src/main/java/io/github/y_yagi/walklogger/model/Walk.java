@@ -16,7 +16,7 @@ public class Walk extends RealmObject {
     @PrimaryKey
     private String uuid;
     private String name;
-    private int stepCounter;
+    private int stepCount;
     private float movingDistance;
     private Date start;
     private Date end;
@@ -51,12 +51,12 @@ public class Walk extends RealmObject {
         this.name = name;
     }
 
-    public int getStepCounter() {
-        return stepCounter;
+    public int getStepCount() {
+        return stepCount;
     }
 
-    public void setStepCounter(int stepCounter) {
-        this.stepCounter = stepCounter;
+    public void setStepCount(int stepCount) {
+        this.stepCount = stepCount;
     }
 
     public float getMovingDistance() {
