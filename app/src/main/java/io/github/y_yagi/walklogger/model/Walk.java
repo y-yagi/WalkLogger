@@ -44,7 +44,13 @@ public class Walk extends RealmObject {
     }
 
     public String info() {
-        return String.format("%.2fm / %d steps", getMovingDistance(), getStepCount());
+        float movingDistance = getMovingDistance();
+        // NOTE: If application crashed, moving distance not saved.
+        if (movingDistance == 0) {
+            movingDistance = calcMovingDistance();
+        }
+
+        return String.format("%.2fm / %d steps", movingDistance, getStepCount());
     }
 
     public String getName() {
