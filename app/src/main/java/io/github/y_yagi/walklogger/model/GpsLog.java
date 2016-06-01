@@ -11,6 +11,7 @@ public class GpsLog extends RealmObject {
     private String uuid;
     private double latitude;
     private double longitude;
+    private String time;
 
     public double getLatitude() {
         return latitude;
@@ -34,5 +35,13 @@ public class GpsLog extends RealmObject {
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

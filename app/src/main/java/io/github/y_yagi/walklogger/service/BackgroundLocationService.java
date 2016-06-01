@@ -54,6 +54,7 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
     private int mStartStepCount = -1;
     private int mEndStepCount = 0;
     private boolean mFirstValue = true;
+    private SimpleDateFormat mTimeFormat;
 
     IBinder mBinder = new LocalBinder();
 
@@ -74,6 +75,7 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         RealmConfiguration config = new RealmConfiguration.Builder(this).deleteRealmIfMigrationNeeded().build();
         Realm.setDefaultConfiguration(config);
         mRealm = Realm.getDefaultInstance();
+        mTimeFormat = new SimpleDateFormat("yyyy-MM-d'T'HH:mm:ssZZZZZ");
 
         buildGoogleApiClient();
         saveWalk();
@@ -156,11 +158,13 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         }
 
         if (mWalk.isValid()) {
+            String currentTime = mTimeFormat.format(new Date());
             mRealm.beginTransaction();
             GpsLog gpsLog = mRealm.createObject(GpsLog.class);
             gpsLog.setUuid(UUID.randomUUID().toString());
             gpsLog.setLatitude(location.getLatitude());
             gpsLog.setLongitude(location.getLongitude());
+            gpsLog.setTime(currentTime);
             mWalk.gpsLogs.add(gpsLog);
             mWalk.setStepCount(mEndStepCount - mStartStepCount);
             mRealm.commitTransaction();
