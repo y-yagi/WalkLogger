@@ -37,6 +37,7 @@ public class MainActivityOperation {
         mRealm.beginTransaction();
         walk.setName(walkName);
         walk.setEnd(new Date());
+        walk.setMovingDistance(walk.calcMovingDistance());
         mRealm.commitTransaction();
     }
 

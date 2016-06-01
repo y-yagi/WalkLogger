@@ -30,21 +30,21 @@ public class Walk extends RealmObject {
         return  durationStr;
     }
 
-    public String totalDistance() {
+    public float calcMovingDistance() {
         float[] apiResults = new float[3];
-        float totalDistance = 0;
+        float movingDistance = 0;
 
         for(int i = 0; i < gpsLogs.size() -1; i++)  {
             GpsLog from = gpsLogs.get(i);
             GpsLog to = gpsLogs.get(i+1);
             Location.distanceBetween(from.getLatitude(), from.getLongitude(), to.getLatitude(), to.getLongitude(), apiResults);
-            totalDistance += apiResults[0];
+            movingDistance += apiResults[0];
         }
-        return String.format("%.2fm", totalDistance);
+        return movingDistance;
     }
 
     public String info() {
-        return String.format("%s / %d steps", totalDistance(), getStepCount());
+        return String.format("%.2fm / %d steps", getMovingDistance(), getStepCount());
     }
 
     public String getName() {
