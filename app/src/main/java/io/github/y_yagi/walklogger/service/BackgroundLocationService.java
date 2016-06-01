@@ -41,7 +41,7 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
 
     private static final String TAG = LogUtil.makeLogTag(BackgroundLocationService.class);
 
-    public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 10000;
+    public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 30000;
     public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = UPDATE_INTERVAL_IN_MILLISECONDS / 2;
     protected GoogleApiClient mGoogleApiClient;
     protected LocationRequest mLocationRequest;
