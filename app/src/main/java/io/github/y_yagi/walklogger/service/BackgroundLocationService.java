@@ -162,6 +162,7 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
             gpsLog.setLatitude(location.getLatitude());
             gpsLog.setLongitude(location.getLongitude());
             mWalk.gpsLogs.add(gpsLog);
+            mWalk.setStepCount(mEndStepCount - mStartStepCount);
             mRealm.commitTransaction();
         }
     }
@@ -190,7 +191,6 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         mWalk.setUuid(UUID.randomUUID().toString());
         mWalk.setStart(d);
         mWalk.setName(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(d));
-        mWalk.setStepCount(mEndStepCount - mStartStepCount);
         mRealm.commitTransaction();
     }
 
