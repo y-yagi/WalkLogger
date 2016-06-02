@@ -7,6 +7,9 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
 
+    <string name="nav_record">Record</string>
+    <string name="nav_history">History</string>
+
     <string name="recording">Now Recording...</string>
     <string name="recording_finish_dialog_title">Set walk name</string>
     <string name="recording_finish_dialog_content">Default: saved time</string>
@@ -14,7 +17,7 @@
     <string name="recording_finish_negative">Not Save</string>
     <string name="recording_finish_neutral">Cancel</string>
 
-    <string name="title_activity_walk_history">WalkHistoryActivity</string>
+    <string name="title_activity_walk_history">WalkHistory</string>
     <string name="title_activity_maps">Map</string>
     <string name="action_settings">Settings</string>
     <string name="update_walk_dialog_title">Update walk name</string>

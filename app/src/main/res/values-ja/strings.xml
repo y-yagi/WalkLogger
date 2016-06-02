@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WalkLogger</string>
+    <string name="map">地図を表示</string>
+    <string name="export">エクスポート</string>
+    <string name="delete">削除</string>
+    <string name="update">更新</string>
+    <string name="ok">OK</string>
+    <string name="cancel">キャンセル</string>
+
+    <string name="nav_record">記録</string>
+    <string name="nav_history">履歴</string>
+
+    <string name="recording">Now Recording...</string>
+    <string name="recording_finish_dialog_title">名称を入力</string>
+    <string name="recording_finish_dialog_content">デフォルト: 保存日時</string>
+    <string name="recording_finish_positive">保存</string>
+    <string name="recording_finish_negative">保存しない</string>
+    <string name="recording_finish_neutral">キャンセル</string>
+
+    <string name="title_activity_walk_history">履歴</string>
+    <string name="title_activity_maps">地図</string>
+    <string name="action_settings">設定</string>
+    <string name="update_walk_dialog_title">名称を更新</string>
+    <string name="delete_walk_dialog_title">履歴を削除</string>
+    <string name="export_walk_dialog_title">履歴をGoogle MyDriveにエクスポート</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="export_complete">エクスポートが完了しました</string>
+</resources>
