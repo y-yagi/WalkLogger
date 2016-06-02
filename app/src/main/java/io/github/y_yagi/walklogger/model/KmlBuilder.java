@@ -28,8 +28,8 @@ public class KmlBuilder {
         String placeMark = String.format("<Placemark><name>%s</name>", mWalk.getName());
         placeMark += "<LineString>\n<tessellate>1</tessellate>\n<coordinates>";
         for(GpsLog gpsLog : mWalk.gpsLogs) {
-            // NOTE: latitude, longitude, elevation
-            placeMark += String.format("%f,%f,0.0 ", gpsLog.getLatitude(), gpsLog.getLongitude());
+            // NOTE: longitude, latitude, elevation
+            placeMark += String.format("%f,%f,0.0 ", gpsLog.getLongitude(), gpsLog.getLatitude());
         }
         placeMark += "</coordinates>\n</LineString>\n</Placemark>";
         return placeMark;

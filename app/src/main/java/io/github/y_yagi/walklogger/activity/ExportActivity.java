@@ -98,8 +98,8 @@ public class ExportActivity extends AppCompatActivity implements
             DriveFolder folder = mFolderDriveId.asDriveFolder();
             MetadataChangeSet changeSet = new MetadataChangeSet.Builder()
                     .setTitle(mWalk.getName() + ".gpx")
-                    .setMimeType("application/xml")
-                    .setStarred(true).build();
+                    .setMimeType("application/gpx+xml")
+                    .build();
             DriveContents contents = result.getDriveContents();
             try {
                 OutputStream os = contents.getOutputStream();
