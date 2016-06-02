@@ -16,8 +16,8 @@
 
     <string name="title_activity_walk_history">WalkHistoryActivity</string>
     <string name="update_walk_dialog_title">Update walk name</string>
-    <string name="delete_walk_dialog_title">Delete walk. OK?</string>
-    <string name="export_walk_dialog_title">Export data to GoogleMyDrive</string>
+    <string name="delete_walk_dialog_title">Delete walk</string>
+    <string name="export_walk_dialog_title">Export data to Google MyDrive</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

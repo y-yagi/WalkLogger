@@ -104,7 +104,7 @@ public class WalkHistoryActivity extends AppCompatActivity implements
                 if (item.getItemId() == R.id.item_map) {
                     MapsActivity.startActivity(mActivity, uuid);
                 } else if (item.getItemId() == R.id.item_export) {
-                    ExportActivity.startActivity(mActivity, uuid);
+                    showExportDialog(uuid);
                 } else if (item.getItemId() == R.id.item_update) {
                     Walk walk = getWalk(uuid);
                     showUpdateDialog(walk);
@@ -150,6 +150,20 @@ public class WalkHistoryActivity extends AppCompatActivity implements
                         walk.deleteFromRealm();
                         realm.commitTransaction();
                         displayWalkHistory();
+                    }
+                })
+                .show();
+    }
+
+    private void showExportDialog(final String uuid) {
+        new MaterialDialog.Builder(this)
+                .title(R.string.export_walk_dialog_title)
+                .positiveText(R.string.ok)
+                .negativeText(R.string.cancel)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        ExportActivity.startActivity(mActivity, uuid);
                     }
                 })
                 .show();
