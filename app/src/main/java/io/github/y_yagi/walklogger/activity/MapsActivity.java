@@ -15,8 +15,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-import java.util.List;
-
 import io.github.y_yagi.walklogger.R;
 import io.github.y_yagi.walklogger.model.GpsLog;
 import io.github.y_yagi.walklogger.model.Walk;

@@ -4,7 +4,6 @@ import android.app.Activity;
 
 import java.util.Date;
 
-import io.github.y_yagi.walklogger.activity.MainActivity;
 import io.github.y_yagi.walklogger.model.Walk;
 import io.github.y_yagi.walklogger.service.BackgroundLocationService;
 import io.github.y_yagi.walklogger.util.ServiceUtil;

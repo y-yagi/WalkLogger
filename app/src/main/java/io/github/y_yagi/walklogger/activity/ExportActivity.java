@@ -15,18 +15,14 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.drive.Drive;
 import com.google.android.gms.drive.DriveApi;
 import com.google.android.gms.drive.DriveContents;
-import com.google.android.gms.drive.DriveFolder;
 import com.google.android.gms.drive.DriveId;
 import com.google.android.gms.drive.MetadataChangeSet;
-import com.google.android.gms.drive.query.Filters;
-import com.google.android.gms.drive.query.Query;
-import com.google.android.gms.drive.query.SearchableField;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
+import io.github.y_yagi.walklogger.R;
 import io.github.y_yagi.walklogger.model.GpxBuilder;
-import io.github.y_yagi.walklogger.model.KmlBuilder;
 import io.github.y_yagi.walklogger.model.Walk;
 import io.github.y_yagi.walklogger.util.LogUtil;
 import io.realm.Realm;
@@ -97,7 +93,6 @@ public class ExportActivity extends AppCompatActivity implements
                 Log.e(TAG, "Error while trying to read drive content");
                 return;
             }
-            DriveFolder folder = mFolderDriveId.asDriveFolder();
             MetadataChangeSet changeSet = new MetadataChangeSet.Builder()
                     .setTitle(mWalk.getName() + ".gpx")
                     .setMimeType("application/gpx+xml")
@@ -130,7 +125,7 @@ public class ExportActivity extends AppCompatActivity implements
         switch (requestCode) {
             case REQUEST_CODE_CREATOR:
                 if (resultCode == RESULT_OK) {
-                    Toast.makeText(this, "File uploaded", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, getString(R.string.export_complete), Toast.LENGTH_LONG).show();
                 }
                 finish();
                 break;
