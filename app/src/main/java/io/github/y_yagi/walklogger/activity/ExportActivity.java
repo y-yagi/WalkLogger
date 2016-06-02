@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import io.github.y_yagi.walklogger.model.GpxBuilder;
+import io.github.y_yagi.walklogger.model.KmlBuilder;
 import io.github.y_yagi.walklogger.model.Walk;
 import io.github.y_yagi.walklogger.util.LogUtil;
 import io.realm.Realm;
