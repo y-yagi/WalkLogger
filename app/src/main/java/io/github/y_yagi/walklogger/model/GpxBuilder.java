@@ -16,12 +16,14 @@ public class GpxBuilder {
         for(GpsLog gpsLog : mWalk.gpsLogs) {
             gpx += trkpt(gpsLog);
         }
+        gpx += closeTags();
         return gpx;
     }
 
     private String header() {
         String header = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
         header += "<gpx version=\"1.1\"\n";
+        header += "creator=\"Walk Logger\"\n";
         header += "xmlns=\"http://www.topografix.com/GPX/1/1\"\n";
         header += "xmlns:topografix=\"http://www.topografix.com/GPX/Private/TopoGrafix/0/1\"\n";
         header += "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n";
@@ -30,18 +32,20 @@ public class GpxBuilder {
     }
 
     private String trk() {
-        String trk = "<trk>";
-        trk += String.format("<name><![CDATA[%s]]></name>", mWalk.getName());
+        String trk = "<trk>\n";
+        trk += String.format("<name><![CDATA[%s]]></name>\n", mWalk.getName());
         return trk;
     }
 
     private String trkseg() {
-        return "<trkseg>";
+        return "<trkseg>\n";
     }
 
     private String trkpt(GpsLog gpsLog) {
-        String trkpt = String.format("<trkpt lat=\"%f\" lon=\"%f\">", gpsLog.getLatitude(), gpsLog.getLongitude());
-        trkpt += "</trkpt>";
-        return  trkpt;
+        return String.format("<trkpt lat=\"%f\" lon=\"%f\"></trkpt>\n", gpsLog.getLatitude(), gpsLog.getLongitude());
+    }
+
+    private String closeTags() {
+        return "</trkseg>\n</trk>\n</gpx>";
     }
 }

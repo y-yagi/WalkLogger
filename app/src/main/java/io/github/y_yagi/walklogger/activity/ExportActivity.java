@@ -6,7 +6,6 @@ import android.content.IntentSender;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -109,7 +108,7 @@ public class ExportActivity extends AppCompatActivity implements
             DriveFolder folder = mFolderDriveId.asDriveFolder();
             MetadataChangeSet changeSet = new MetadataChangeSet.Builder()
                     .setTitle(mWalk.getName() + ".gpx")
-                    .setMimeType("text/xml")
+                    .setMimeType("application/xml")
                     .setStarred(true).build();
             DriveContents contents = result.getDriveContents();
             try {
