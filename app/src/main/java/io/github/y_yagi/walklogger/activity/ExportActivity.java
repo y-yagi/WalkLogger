@@ -17,6 +17,9 @@ import com.google.android.gms.drive.DriveContents;
 import com.google.android.gms.drive.DriveFolder;
 import com.google.android.gms.drive.DriveId;
 import com.google.android.gms.drive.MetadataChangeSet;
+import com.google.android.gms.drive.query.Filters;
+import com.google.android.gms.drive.query.Query;
+import com.google.android.gms.drive.query.SearchableField;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -79,22 +82,8 @@ public class ExportActivity extends AppCompatActivity implements
 
     @Override
     public void onConnected(Bundle connectionHint) {
-        MetadataChangeSet changeSet = new MetadataChangeSet.Builder()
-                .setTitle("WalkLogger").build();
-        Drive.DriveApi.getRootFolder(getGoogleApiClient()).createFolder(
-                getGoogleApiClient(), changeSet).setResultCallback(folderCallback);
-    }
-    final ResultCallback<DriveFolder.DriveFolderResult> folderCallback = new ResultCallback<DriveFolder.DriveFolderResult>() {
-        @Override
-        public void onResult(DriveFolder.DriveFolderResult result) {
-            if (!result.getStatus().isSuccess()) {
-                Log.e(TAG, "Error while trying to create the folder");
-                return;
-            }
-            Log.i(TAG, "Created a folder: " + result.getDriveFolder().getDriveId());
-            mFolderDriveId = result.getDriveFolder().getDriveId();
-            Drive.DriveApi.newDriveContents(getGoogleApiClient()).setResultCallback(driveContentsCallback);
-        }
+        mFolderDriveId = Drive.DriveApi.getRootFolder(getGoogleApiClient()).getDriveId();
+        Drive.DriveApi.newDriveContents(getGoogleApiClient()).setResultCallback(driveContentsCallback);
     };
 
 
@@ -135,9 +124,7 @@ public class ExportActivity extends AppCompatActivity implements
     };
 
     @Override
-    public void onConnectionSuspended(int cause) {
-        Log.i(TAG, "GoogleApiClient connection suspended");
-    }
+    public void onConnectionSuspended(int cause) { }
 
     @Override
     public void onConnectionFailed(ConnectionResult result) {
