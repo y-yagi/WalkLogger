@@ -6,6 +6,7 @@ import android.content.IntentSender;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -44,6 +45,7 @@ public class ExportActivity extends AppCompatActivity implements
     private static final String TAG = LogUtil.makeLogTag(ExportActivity.class);
     private static final String EXTRA_TRAVEL_UUID = "uuid";
     protected static final int REQUEST_CODE_RESOLUTION = 1;
+    protected static final int REQUEST_CODE_CREATOR = 1;
 
     public static void startActivity(Context context, String uuid) {
         Intent intent = new Intent(context, ExportActivity.class);
@@ -109,20 +111,34 @@ public class ExportActivity extends AppCompatActivity implements
                 Log.e(TAG, "Error while trying to create file " + e.getMessage());
                 return;
             }
-            folder.createFile(getGoogleApiClient(), changeSet, contents).setResultCallback(fileCallback);
+            IntentSender intentSender = Drive.DriveApi
+                    .newCreateFileActivityBuilder()
+                    .setInitialMetadata(changeSet)
+                    .setInitialDriveContents(result.getDriveContents())
+                    .build(getGoogleApiClient());
+            try {
+                startIntentSenderForResult(intentSender, 1, null, 0, 0, 0);
+            } catch (IntentSender.SendIntentException e) {
+                Log.e(TAG, "Error while start Intent sender " + e.getMessage());
+                return;
+            }
         }
     };
 
-    final private ResultCallback<DriveFolder.DriveFileResult> fileCallback =  new ResultCallback<DriveFolder.DriveFileResult>() {
-        @Override
-        public void onResult(DriveFolder.DriveFileResult result) {
-            if (!result.getStatus().isSuccess()) {
-                Log.e(TAG, "Error while trying to create the file");
-                return;
-            }
-            finish();
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case REQUEST_CODE_CREATOR:
+                if (resultCode == RESULT_OK) {
+                    Toast.makeText(this, "File uploaded", Toast.LENGTH_LONG).show();
+                }
+                finish();
+                break;
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+                break;
         }
-    };
+    }
 
     @Override
     public void onConnectionSuspended(int cause) { }
