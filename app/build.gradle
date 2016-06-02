@@ -33,6 +33,7 @@ dependencies {
     compile "com.android.support:cardview-v7:${support_lib_version}"
     compile "com.google.android.gms:play-services-maps:${play_services_lib_version}"
     compile "com.google.android.gms:play-services-location:${play_services_lib_version}"
+    compile "com.google.android.gms:play-services-drive:${play_services_lib_version}"
     compile 'com.google.firebase:firebase-crash:9.0.0'
 
     compile 'com.github.markushi:circlebutton:1.1'

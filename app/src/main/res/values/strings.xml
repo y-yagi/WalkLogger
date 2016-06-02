@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">WalkLogger</string>
     <string name="map">Map</string>
+    <string name="export">Export</string>
     <string name="delete">Delete</string>
     <string name="update">Update</string>
     <string name="ok">OK</string>
@@ -16,6 +17,7 @@
     <string name="title_activity_walk_history">WalkHistoryActivity</string>
     <string name="update_walk_dialog_title">Update walk name</string>
     <string name="delete_walk_dialog_title">Delete walk. OK?</string>
+    <string name="export_walk_dialog_title">Export data to GoogleMyDrive</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

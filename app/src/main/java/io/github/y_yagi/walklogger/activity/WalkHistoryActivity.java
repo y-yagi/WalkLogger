@@ -1,7 +1,6 @@
 package io.github.y_yagi.walklogger.activity;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -14,10 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.LinearLayout;
 
-import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
@@ -28,8 +25,8 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
-public class WalkHistoryActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class WalkHistoryActivity extends AppCompatActivity implements
+        NavigationView.OnNavigationItemSelectedListener {
 
     private Activity mActivity;
 
@@ -106,6 +103,8 @@ public class WalkHistoryActivity extends AppCompatActivity
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.item_map) {
                     MapsActivity.startActivity(mActivity, uuid);
+                } else if (item.getItemId() == R.id.item_export) {
+                    ExportActivity.startActivity(mActivity, uuid);
                 } else if (item.getItemId() == R.id.item_update) {
                     Walk walk = getWalk(uuid);
                     showUpdateDialog(walk);
@@ -167,4 +166,5 @@ public class WalkHistoryActivity extends AppCompatActivity
         Realm realm = Realm.getDefaultInstance();
         return realm.where(Walk.class).equalTo("uuid", uuid).findFirst();
     }
+
 }
