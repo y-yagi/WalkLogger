@@ -28,6 +28,7 @@ import io.realm.Sort;
 public class WalkHistoryActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener {
 
+    private final int mNavPosition = 1;
     private Activity mActivity;
 
     @Override
@@ -45,6 +46,7 @@ public class WalkHistoryActivity extends AppCompatActivity implements
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.getMenu().getItem(mNavPosition).setChecked(true);
 
         mActivity = this;
         displayWalkHistory();

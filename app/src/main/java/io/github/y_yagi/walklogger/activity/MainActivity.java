@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView mRecordingText;
     private Realm mRealm;
     private MainActivityOperation mOperation;
+    private final int mNavPosition = 0;
     public static final int REQUEST_LOCATION = 1;
 
     @Override
@@ -132,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.getMenu().getItem(mNavPosition).setChecked(true);
     }
 
 
