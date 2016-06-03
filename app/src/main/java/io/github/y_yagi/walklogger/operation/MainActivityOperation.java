@@ -27,6 +27,10 @@ public class MainActivityOperation {
         mRealm = Realm.getDefaultInstance();
     }
 
+    public void term() {
+       mRealm.close();
+    }
+
     public boolean isRecording() {
         return ServiceUtil.isServiceRunning(mActiviy, BackgroundLocationService.class);
     }

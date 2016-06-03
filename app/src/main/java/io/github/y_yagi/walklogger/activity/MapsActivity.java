@@ -80,6 +80,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void setWalk() {
         Realm realm = Realm.getDefaultInstance();
         mWalk = realm.where(Walk.class).equalTo("uuid", mUuid).findFirst();
+        realm.close();
     }
 
     private void displayPolylines() {

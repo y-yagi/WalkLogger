@@ -25,13 +25,11 @@ import io.github.y_yagi.walklogger.R;
 import io.github.y_yagi.walklogger.operation.MainActivityOperation;
 import io.github.y_yagi.walklogger.service.BackgroundLocationService;
 import io.github.y_yagi.walklogger.util.DateUtil;
-import io.realm.Realm;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
     private CircleButton mRecordButton;
     private CircleButton mStopButton;
     private TextView mRecordingText;
-    private Realm mRealm;
     private MainActivityOperation mOperation;
     private final int mNavPosition = 0;
     public static final int REQUEST_LOCATION = 1;
@@ -62,6 +60,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mRecordingText.setVisibility(View.VISIBLE);
         }
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mOperation.term();
     }
 
     @Override

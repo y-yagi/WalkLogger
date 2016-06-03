@@ -184,6 +184,7 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
     @Override
     public void onDestroy() {
         super.onDestroy();
+        mRealm.close();
         stopLocationUpdates();
     }
 
