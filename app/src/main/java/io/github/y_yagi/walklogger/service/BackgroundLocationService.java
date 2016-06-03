@@ -21,6 +21,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.firebase.crash.FirebaseCrash;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -131,7 +132,7 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         try {
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
         } catch (SecurityException e) {
-            // Do nothing. Check permission in Activity
+            FirebaseCrash.report(e);
         }
     }
 
@@ -149,7 +150,6 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
      */
     @Override
     public void onLocationChanged(Location location) {
-        Log.e(TAG, "onLocationChanged");
         // HACK: It ignored because it is often the first value values outside.
         // This is unnecessary if the first to display a Google Map.
         if (mFirstValue) {
