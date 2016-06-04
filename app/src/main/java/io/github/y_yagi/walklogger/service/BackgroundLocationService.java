@@ -48,7 +48,6 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
     protected LocationRequest mLocationRequest;
 
     private Intent mIntentService;
-    private PendingIntent mPendingIntent;
     private Realm mRealm;
     private NotificationManager mNotificationManager;
     private Walk mWalk;
@@ -70,7 +69,6 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         super.onCreate();
 
         mIntentService = new Intent(this, LocationUpdates.class);
-        mPendingIntent = PendingIntent.getService(this, 1, mIntentService, PendingIntent.FLAG_UPDATE_CURRENT);
 
         // TODO: remove deleteRealmIfMigration
         RealmConfiguration config = new RealmConfiguration.Builder(this).deleteRealmIfMigrationNeeded().build();
@@ -137,7 +135,7 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
     }
 
     protected void stopLocationUpdates() {
-        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, mPendingIntent);
+        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
     }
 
     @Override
