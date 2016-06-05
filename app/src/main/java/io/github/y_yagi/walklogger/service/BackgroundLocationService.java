@@ -155,7 +155,7 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
             return;
         }
 
-        if (mWalk.isValid()) {
+        if (mWalk.isValid() && location != null) {
             String currentTime = mTimeFormat.format(new Date());
             mRealm.beginTransaction();
             GpsLog gpsLog = mRealm.createObject(GpsLog.class);
