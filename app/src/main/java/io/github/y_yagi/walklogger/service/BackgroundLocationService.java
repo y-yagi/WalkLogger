@@ -77,7 +77,7 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         mTimeFormat = new SimpleDateFormat("yyyy-MM-d'T'HH:mm:ssZZZZZ");
 
         buildGoogleApiClient();
-        saveWalk();
+        createWalk();
         setSensor();
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
@@ -164,7 +164,6 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
             gpsLog.setLongitude(location.getLongitude());
             gpsLog.setTime(currentTime);
             mWalk.gpsLogs.add(gpsLog);
-            mWalk.setStepCount(mEndStepCount - mStartStepCount);
             mRealm.commitTransaction();
         }
     }
@@ -182,11 +181,12 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
     @Override
     public void onDestroy() {
         super.onDestroy();
+        finisWalk();
         mRealm.close();
         stopLocationUpdates();
     }
 
-    private void saveWalk() {
+    private void createWalk() {
         mRealm.beginTransaction();
         mWalk = mRealm.createObject(Walk.class);
 
@@ -195,6 +195,15 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         mWalk.setStart(d);
         mWalk.setName(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(d));
         mRealm.commitTransaction();
+    }
+
+    private void finisWalk() {
+        if (mWalk.isValid()) {
+            mRealm.beginTransaction();
+            mWalk.setStepCount(mEndStepCount - mStartStepCount);
+            mRealm.commitTransaction();
+        }
+
     }
 
     private void setSensor() {
