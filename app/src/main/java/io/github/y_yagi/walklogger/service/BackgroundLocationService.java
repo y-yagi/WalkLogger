@@ -48,12 +48,11 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
     protected LocationRequest mLocationRequest;
 
     private Intent mIntentService;
-    private Realm mRealm;
     private NotificationManager mNotificationManager;
-    private Walk mWalk;
     private int mStartStepCount = -1;
     private int mEndStepCount = 0;
     private boolean mFirstValue = true;
+    private String mUuid;
     private SimpleDateFormat mTimeFormat;
 
     IBinder mBinder = new LocalBinder();
@@ -73,7 +72,6 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         // TODO: remove deleteRealmIfMigration
         RealmConfiguration config = new RealmConfiguration.Builder(this).deleteRealmIfMigrationNeeded().build();
         Realm.setDefaultConfiguration(config);
-        mRealm = Realm.getDefaultInstance();
         mTimeFormat = new SimpleDateFormat("yyyy-MM-d'T'HH:mm:ssZZZZZ");
 
         buildGoogleApiClient();
@@ -155,17 +153,21 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
             return;
         }
 
-        if (mWalk.isValid() && location != null) {
+        Realm realm = Realm.getDefaultInstance();
+        Walk walk = getWalk(realm);
+        if (walk != null && location != null) {
             String currentTime = mTimeFormat.format(new Date());
-            mRealm.beginTransaction();
-            GpsLog gpsLog = mRealm.createObject(GpsLog.class);
+            realm.beginTransaction();
+            GpsLog gpsLog = realm.createObject(GpsLog.class);
             gpsLog.setUuid(UUID.randomUUID().toString());
             gpsLog.setLatitude(location.getLatitude());
             gpsLog.setLongitude(location.getLongitude());
             gpsLog.setTime(currentTime);
-            mWalk.gpsLogs.add(gpsLog);
-            mRealm.commitTransaction();
+            walk.gpsLogs.add(gpsLog);
+            walk.setStepCount(mEndStepCount - mStartStepCount);
+            realm.commitTransaction();
         }
+        realm.close();
     }
 
     @Override
@@ -181,29 +183,24 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
     @Override
     public void onDestroy() {
         super.onDestroy();
-        finisWalk();
-        mRealm.close();
         stopLocationUpdates();
     }
 
     private void createWalk() {
-        mRealm.beginTransaction();
-        mWalk = mRealm.createObject(Walk.class);
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        Walk walk = realm.createObject(Walk.class);
 
         Date d = new Date();
-        mWalk.setUuid(UUID.randomUUID().toString());
-        mWalk.setStart(d);
-        mWalk.setName(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(d));
-        mRealm.commitTransaction();
+        mUuid = UUID.randomUUID().toString();
+        walk.setUuid(mUuid);
+        walk.setStart(d);
+        walk.setName(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(d));
+        realm.commitTransaction();
     }
 
-    private void finisWalk() {
-        if (mWalk.isValid()) {
-            mRealm.beginTransaction();
-            mWalk.setStepCount(mEndStepCount - mStartStepCount);
-            mRealm.commitTransaction();
-        }
-
+    private Walk getWalk(Realm realm) {
+        return realm.where(Walk.class).equalTo("uuid", mUuid).findFirst();
     }
 
     private void setSensor() {
