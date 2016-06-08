@@ -76,7 +76,6 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
 
         buildGoogleApiClient();
         createWalk();
-        setSensor();
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
         builder.setContentTitle(getString(R.string.app_name));
@@ -201,23 +200,5 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
 
     private Walk getWalk(Realm realm) {
         return realm.where(Walk.class).equalTo("uuid", mUuid).findFirst();
-    }
-
-    private void setSensor() {
-        SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        Sensor sensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
-        sensorManager.registerListener(new SensorEventListener() {
-            @Override
-            public void onSensorChanged(SensorEvent event) {
-                if ( mStartStepCount == -1) {
-                    mStartStepCount = (int) event.values[0];
-                } else {
-                    mEndStepCount = (int) event.values[0];
-                }
-            }
-
-            @Override
-            public void onAccuracyChanged(Sensor sensor, int accuracy) { }
-        }, sensor, SensorManager.SENSOR_DELAY_UI);
     }
 }

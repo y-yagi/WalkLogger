@@ -50,7 +50,7 @@ public class Walk extends RealmObject {
             movingDistance = calcMovingDistance();
         }
 
-        return String.format("%.2fm / %d steps", movingDistance, getStepCount());
+        return String.format("%.2fm", movingDistance);
     }
 
     public String getName() {
