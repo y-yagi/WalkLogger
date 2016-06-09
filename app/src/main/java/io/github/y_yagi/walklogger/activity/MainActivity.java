@@ -1,6 +1,7 @@
 package io.github.y_yagi.walklogger.activity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.design.widget.NavigationView;
@@ -22,6 +23,7 @@ import java.util.Date;
 
 import at.markushi.ui.CircleButton;
 import io.github.y_yagi.walklogger.R;
+import io.github.y_yagi.walklogger.model.Walk;
 import io.github.y_yagi.walklogger.operation.MainActivityOperation;
 import io.github.y_yagi.walklogger.service.BackgroundLocationService;
 import io.github.y_yagi.walklogger.util.DateUtil;
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CircleButton mStopButton;
     private TextView mRecordingText;
     private MainActivityOperation mOperation;
+    private Activity mActivity;
     private final int mNavPosition = 0;
     public static final int REQUEST_LOCATION = 1;
 
@@ -47,12 +50,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setupDrawerAndToolBar();
 
         mOperation = new MainActivityOperation(this);
+        mActivity = this;
 
         mRecordButton = (CircleButton) findViewById(R.id.record_button);
         mRecordButton.setOnClickListener(this);
         mStopButton = (CircleButton) findViewById(R.id.stop_button);
         mStopButton.setOnClickListener(this);
         mRecordingText = (TextView) findViewById(R.id.recording_text);
+        mRecordingText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Walk walk = mOperation.getWalk();
+                MapsActivity.startActivity(mActivity, walk.getUuid());
+            }
+        });
 
         if (mOperation.isRecording()) {
             mRecordButton.setVisibility(View.INVISIBLE);

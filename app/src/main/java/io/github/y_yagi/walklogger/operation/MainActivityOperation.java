@@ -53,7 +53,7 @@ public class MainActivityOperation {
         mRealm.commitTransaction();
     }
 
-    private Walk getWalk() {
+    public Walk getWalk() {
         return mRealm.where(Walk.class).findAllSorted("start", Sort.DESCENDING).first();
     }
 }
