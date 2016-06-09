@@ -17,6 +17,8 @@
     <string name="recording_finish_negative">Not Save</string>
     <string name="recording_finish_neutral">Cancel</string>
 
+    <string name="notification_content">Now Recording...</string>
+
     <string name="title_activity_walk_history">WalkHistory</string>
     <string name="title_activity_maps">Map</string>
     <string name="action_settings">Settings</string>

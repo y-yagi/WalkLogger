@@ -18,6 +18,8 @@
     <string name="recording_finish_negative">保存しない</string>
     <string name="recording_finish_neutral">キャンセル</string>
 
+    <string name="notification_content">記録中です...</string>
+
     <string name="title_activity_walk_history">履歴</string>
     <string name="title_activity_maps">地図</string>
     <string name="action_settings">設定</string>

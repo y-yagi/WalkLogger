@@ -79,7 +79,7 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
         builder.setContentTitle(getString(R.string.app_name));
-        builder.setContentText(getString(R.string.recording));
+        builder.setContentText(getString(R.string.notification_content));
         builder.setSmallIcon(R.mipmap.ic_launcher);
         mNotificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         mNotificationManager.notify(R.string.app_name, builder.build());
