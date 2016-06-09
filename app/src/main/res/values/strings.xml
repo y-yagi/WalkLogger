@@ -7,6 +7,8 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
 
+    <string name="walk_name">walk name</string>
+
     <string name="nav_record">Record</string>
     <string name="nav_history">History</string>
 

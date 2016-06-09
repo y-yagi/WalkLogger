@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         MaterialDialog.Builder materialBuilder = new MaterialDialog.Builder(this);
         materialBuilder.title(R.string.recording_finish_dialog_title);
         materialBuilder.content(R.string.recording_finish_dialog_content);
-        materialBuilder.input("walk name", "", true, new MaterialDialog.InputCallback() {
+        materialBuilder.input(getString(R.string.walk_name), "", true, new MaterialDialog.InputCallback() {
             @Override
             public void onInput(MaterialDialog dialog, CharSequence input) {
                 String walkName = input.toString();
