@@ -28,6 +28,7 @@ import java.util.Date;
 import java.util.UUID;
 
 import io.github.y_yagi.walklogger.R;
+import io.github.y_yagi.walklogger.activity.MainActivity;
 import io.github.y_yagi.walklogger.model.GpsLog;
 import io.github.y_yagi.walklogger.model.Walk;
 import io.github.y_yagi.walklogger.util.LogUtil;
@@ -78,10 +79,15 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         buildGoogleApiClient();
         createWalk();
 
+        Intent intent = new Intent(this, MainActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
         builder.setContentTitle(getString(R.string.app_name));
         builder.setContentText(getString(R.string.notification_content));
         builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setContentIntent(contentIntent);
         mNotificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         mNotificationManager.notify(R.string.app_name, builder.build());
         startForeground(R.string.app_name, builder.build());
