@@ -39,3 +39,8 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+project.ext {
+    support_lib_version = "23.4.0"
+    play_services_lib_version = "9.0.2"
+}
