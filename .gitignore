@@ -40,3 +40,5 @@ Thumbs.db
 gradle.properties
 mockable-android-23.jar
 google-services.json
+
+build/
