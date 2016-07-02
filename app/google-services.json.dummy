@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "2123232680",
+    "firebase_url": "https://fine-xxx-11112.firebaseio.com",
+    "project_id": "fine-xxx-11112",
+    "storage_bucket": "fine-xxx-11112.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:2655555555555:android:6c998ee1ce81fec7",
+        "android_client_info": {
+          "package_name": "xyz.yyagi.travelbase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "xyz.yyagi.travelbase",
+            "certificate_hash": "24"
+          }
+        },
+        {
+          "client_id": "6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "ABC"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
