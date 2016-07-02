@@ -82,7 +82,6 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         Intent intent = new Intent(this, MainActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
         builder.setContentTitle(getString(R.string.app_name));
         builder.setContentText(getString(R.string.notification_content));
