@@ -38,6 +38,6 @@ dependencies {
     compile 'com.google.firebase:firebase-crash:9.4.0'
 
     compile 'com.github.markushi:circlebutton:1.1'
-    compile 'com.afollestad.material-dialogs:core:0.8.6.2'
+    compile 'com.afollestad.material-dialogs:core:0.9.0.1'
 }
 apply plugin: 'com.google.gms.google-services'
