@@ -40,6 +40,6 @@ task clean(type: Delete) {
 }
 
 project.ext {
-    support_lib_version = "24.2.0"
+    support_lib_version = "24.2.1"
     play_services_lib_version = "9.4.0"
 }
