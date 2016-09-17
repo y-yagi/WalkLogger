@@ -12,6 +12,7 @@ import android.location.Location;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
@@ -49,10 +50,6 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
     protected GoogleApiClient mGoogleApiClient;
     protected LocationRequest mLocationRequest;
 
-    private Intent mIntentService;
-    private NotificationManager mNotificationManager;
-    private int mStartStepCount = -1;
-    private int mEndStepCount = 0;
     private boolean mFirstValue = true;
     private String mUuid;
     private SimpleDateFormat mTimeFormat;
@@ -69,7 +66,7 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
     public void onCreate() {
         super.onCreate();
 
-        mIntentService = new Intent(this, LocationUpdates.class);
+        NotificationManager notificationManager;
 
         // TODO: remove deleteRealmIfMigration
         RealmConfiguration config = new RealmConfiguration.Builder(this).deleteRealmIfMigrationNeeded().build();
@@ -87,8 +84,8 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         builder.setContentText(getString(R.string.notification_content));
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setContentIntent(contentIntent);
-        mNotificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-        mNotificationManager.notify(R.string.app_name, builder.build());
+        notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(R.string.app_name, builder.build());
         startForeground(R.string.app_name, builder.build());
     }
 
@@ -169,7 +166,6 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
             gpsLog.setLongitude(location.getLongitude());
             gpsLog.setTime(currentTime);
             walk.gpsLogs.add(gpsLog);
-            walk.setStepCount(mEndStepCount - mStartStepCount);
             realm.commitTransaction();
         }
         realm.close();
@@ -181,7 +177,7 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
     }
 
     @Override
-    public void onConnectionFailed(ConnectionResult result) {
+    public void onConnectionFailed(@NonNull ConnectionResult result) {
         Log.i(TAG, "Connection failed: ConnectionResult.getErrorCode() = " + result.getErrorCode());
     }
 

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView mRecordingText;
     private MainActivityOperation mOperation;
     private Activity mActivity;
-    private final int mNavPosition = 0;
+    private static final int NAV_POSITION = 0;
     public static final int REQUEST_LOCATION = 1;
 
     @Override
@@ -148,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.getMenu().getItem(mNavPosition).setChecked(true);
+        navigationView.getMenu().getItem(NAV_POSITION).setChecked(true);
     }
 
 
@@ -164,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull  MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 

@@ -37,7 +37,6 @@ public class ExportActivity extends AppCompatActivity implements
     private String mUuid;
     private Walk mWalk;
     private GoogleApiClient mGoogleApiClient;
-    private DriveId mFolderDriveId;
     private static final String TAG = LogUtil.makeLogTag(ExportActivity.class);
     private static final String EXTRA_TRAVEL_UUID = "uuid";
     protected static final int REQUEST_CODE_RESOLUTION = 1;
@@ -81,7 +80,6 @@ public class ExportActivity extends AppCompatActivity implements
 
     @Override
     public void onConnected(Bundle connectionHint) {
-        mFolderDriveId = Drive.DriveApi.getRootFolder(getGoogleApiClient()).getDriveId();
         Drive.DriveApi.newDriveContents(getGoogleApiClient()).setResultCallback(driveContentsCallback);
     };
 

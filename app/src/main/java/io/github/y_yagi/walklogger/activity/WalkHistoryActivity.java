@@ -28,7 +28,7 @@ import io.realm.Sort;
 public class WalkHistoryActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener {
 
-    private final int mNavPosition = 1;
+    private static final int NAV_POSITION = 1;
     private Activity mActivity;
 
     @Override
@@ -46,7 +46,7 @@ public class WalkHistoryActivity extends AppCompatActivity implements
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.getMenu().getItem(mNavPosition).setChecked(true);
+        navigationView.getMenu().getItem(NAV_POSITION).setChecked(true);
 
         mActivity = this;
         displayWalkHistory();
@@ -65,7 +65,7 @@ public class WalkHistoryActivity extends AppCompatActivity implements
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
