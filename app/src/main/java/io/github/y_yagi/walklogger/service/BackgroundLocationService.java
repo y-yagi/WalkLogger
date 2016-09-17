@@ -53,6 +53,8 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
     private boolean mFirstValue = true;
     private String mUuid;
     private SimpleDateFormat mTimeFormat;
+    private Location mLastLocation;
+    private int mLocationCheckCount = 0;
 
     IBinder mBinder = new LocalBinder();
 
@@ -148,6 +150,10 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
      */
     @Override
     public void onLocationChanged(Location location) {
+        if (location == null) {
+            return;
+        }
+
         // HACK: It ignored because it is often the first value values outside.
         // This is unnecessary if the first to display a Google Map.
         if (mFirstValue) {
@@ -155,9 +161,11 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
             return;
         }
 
+        if (!isValidLocation(location)) return;
+
         Realm realm = Realm.getDefaultInstance();
         Walk walk = getWalk(realm);
-        if (walk != null && location != null) {
+        if (walk != null) {
             String currentTime = mTimeFormat.format(new Date());
             realm.beginTransaction();
             GpsLog gpsLog = realm.createObject(GpsLog.class);
@@ -168,6 +176,7 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
             walk.gpsLogs.add(gpsLog);
             realm.commitTransaction();
         }
+        mLastLocation = location;
         realm.close();
     }
 
@@ -202,5 +211,24 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
 
     private Walk getWalk(Realm realm) {
         return realm.where(Walk.class).equalTo("uuid", mUuid).findFirst();
+    }
+
+    private boolean isValidLocation(Location location) {
+        if (mLastLocation == null || mLocationCheckCount > 2) {
+            mLocationCheckCount = 0;
+            return true;
+        }
+
+        float[] distances = new float[3];
+
+        Location.distanceBetween(mLastLocation.getLatitude(), mLastLocation.getLongitude(), location.getLatitude(), location.getLongitude(), distances);
+
+        // NOTE: Deal for the case correctly value such as underground can not be acquired
+        if (distances[0] > 70) {
+            mLocationCheckCount += 1;
+            return false;
+        } else {
+            return true;
+        }
     }
 }
