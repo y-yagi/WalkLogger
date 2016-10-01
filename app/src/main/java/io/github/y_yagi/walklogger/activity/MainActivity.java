@@ -32,6 +32,7 @@ import io.github.y_yagi.walklogger.util.DateUtil;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
     private CircleButton mRecordButton;
     private CircleButton mStopButton;
+    private CircleButton mPauseButton;
     private TextView mRecordingText;
     private MainActivityOperation mOperation;
     private Activity mActivity;
@@ -57,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRecordButton.setOnClickListener(this);
         mStopButton = (CircleButton) findViewById(R.id.stop_button);
         mStopButton.setOnClickListener(this);
+        mPauseButton = (CircleButton) findViewById(R.id.pause_button);
+        mPauseButton.setOnClickListener(this);
         mRecordingText = (TextView) findViewById(R.id.recording_text);
         mRecordingText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (mOperation.isRecording()) {
             mRecordButton.setVisibility(View.INVISIBLE);
             mStopButton.setVisibility(View.VISIBLE);
+            mPauseButton.setVisibility(View.VISIBLE);
             mRecordingText.setVisibility(View.VISIBLE);
         }
 
@@ -126,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startService(intent);
         mRecordButton.setVisibility(View.INVISIBLE);
         mStopButton.setVisibility(View.VISIBLE);
+        mPauseButton.setVisibility(View.VISIBLE);
         mRecordingText.setVisibility(View.VISIBLE);
     }
 
@@ -134,6 +139,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         stopService(intent);
         mRecordButton.setVisibility(View.VISIBLE);
         mStopButton.setVisibility(View.INVISIBLE);
+        mPauseButton.setVisibility(View.INVISIBLE);
         mRecordingText.setVisibility(View.INVISIBLE);
     }
 
