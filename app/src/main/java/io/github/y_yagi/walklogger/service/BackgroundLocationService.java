@@ -169,8 +169,7 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         if (walk != null) {
             String currentTime = mTimeFormat.format(new Date());
             realm.beginTransaction();
-            GpsLog gpsLog = realm.createObject(GpsLog.class);
-            gpsLog.setUuid(UUID.randomUUID().toString());
+            GpsLog gpsLog = realm.createObject(GpsLog.class, UUID.randomUUID().toString());
             gpsLog.setLatitude(location.getLatitude());
             gpsLog.setLongitude(location.getLongitude());
             gpsLog.setTime(currentTime);
@@ -200,11 +199,10 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
     private void createWalk() {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
-        Walk walk = realm.createObject(Walk.class);
+        mUuid = UUID.randomUUID().toString();
+        Walk walk = realm.createObject(Walk.class, mUuid);
 
         Date d = new Date();
-        mUuid = UUID.randomUUID().toString();
-        walk.setUuid(mUuid);
         walk.setStart(d);
         walk.setName(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(d));
         realm.commitTransaction();
