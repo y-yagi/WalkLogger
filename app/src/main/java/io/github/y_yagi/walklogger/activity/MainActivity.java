@@ -93,7 +93,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mStopButton.setVisibility(View.VISIBLE);
             mRecordingText.setVisibility(View.VISIBLE);
 
-            if (mOperation.isPaused()) mRestartButton.setVisibility(View.VISIBLE);
+            if (mOperation.isPaused()) {
+                mRestartButton.setVisibility(View.VISIBLE);
+            } else {
+                mPauseButton.setVisibility(View.VISIBLE);
+            }
         }
 
     }
