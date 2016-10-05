@@ -165,7 +165,7 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         }
 
         if (!isValidLocation(location)) return;
-        // DEBUG
+        // TODO: remove
         Log.e(TAG, "paused state: " + Boolean.toString(isPaused()));
 
         if (isPaused()) return;
