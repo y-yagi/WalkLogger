@@ -73,8 +73,7 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         NotificationManager notificationManager;
         Realm.init(this);
 
-        // TODO: remove deleteRealmIfMigration
-        RealmConfiguration config = new RealmConfiguration.Builder().deleteRealmIfMigrationNeeded().build();
+        RealmConfiguration config = new RealmConfiguration.Builder().build();
         Realm.setDefaultConfiguration(config);
         mTimeFormat = new SimpleDateFormat("yyyy-MM-d'T'HH:mm:ssZZZZZ");
 
