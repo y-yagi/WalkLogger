@@ -6,6 +6,7 @@
 
     <color name="buttonPending">#99cc00</color>
     <color name="buttonRecording">#ff4444</color>
+    <color name="buttonPause">#ffec44</color>
 
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>

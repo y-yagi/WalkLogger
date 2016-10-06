@@ -3,7 +3,9 @@ package io.github.y_yagi.walklogger.operation;
 import android.app.Activity;
 
 import java.util.Date;
+import java.util.MissingResourceException;
 
+import io.github.y_yagi.walklogger.model.LoggerState;
 import io.github.y_yagi.walklogger.model.Walk;
 import io.github.y_yagi.walklogger.service.BackgroundLocationService;
 import io.github.y_yagi.walklogger.util.ServiceUtil;
@@ -56,5 +58,31 @@ public class MainActivityOperation {
 
     public Walk getWalk() {
         return mRealm.where(Walk.class).findAllSorted("start", Sort.DESCENDING).first();
+    }
+
+    public void pause() {
+        mRealm.beginTransaction();
+        LoggerState loggerState = mRealm.createObject(LoggerState.class);
+        loggerState.setPause(true);
+        mRealm.commitTransaction();
+    }
+
+    public void restart() {
+        mRealm.beginTransaction();
+        mRealm.delete(LoggerState.class);
+        mRealm.commitTransaction();
+    }
+
+    public void stopService() {
+        mRealm.beginTransaction();
+        mRealm.delete(LoggerState.class);
+        mRealm.commitTransaction();
+    }
+
+    public boolean isPaused() {
+        boolean paused = false;
+        LoggerState loggerState = mRealm.where(LoggerState.class).findFirst();
+        if (loggerState != null && loggerState.getPause()) paused = true;
+        return paused;
     }
 }

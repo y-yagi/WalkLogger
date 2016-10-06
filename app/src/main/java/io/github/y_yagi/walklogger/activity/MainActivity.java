@@ -32,6 +32,8 @@ import io.github.y_yagi.walklogger.util.DateUtil;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
     private CircleButton mRecordButton;
     private CircleButton mStopButton;
+    private CircleButton mPauseButton;
+    private CircleButton mRestartButton;
     private TextView mRecordingText;
     private MainActivityOperation mOperation;
     private Activity mActivity;
@@ -57,6 +59,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRecordButton.setOnClickListener(this);
         mStopButton = (CircleButton) findViewById(R.id.stop_button);
         mStopButton.setOnClickListener(this);
+
+        mPauseButton = (CircleButton) findViewById(R.id.pause_button);
+        mPauseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mOperation.pause();
+                mPauseButton.setVisibility(View.INVISIBLE);
+                mRestartButton.setVisibility(View.VISIBLE);
+            }
+        });
+        mRestartButton = (CircleButton) findViewById(R.id.restart_button);
+        mRestartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mOperation.restart();
+                mPauseButton.setVisibility(View.VISIBLE);
+                mRestartButton.setVisibility(View.INVISIBLE);
+            }
+        });
+
         mRecordingText = (TextView) findViewById(R.id.recording_text);
         mRecordingText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +92,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mRecordButton.setVisibility(View.INVISIBLE);
             mStopButton.setVisibility(View.VISIBLE);
             mRecordingText.setVisibility(View.VISIBLE);
+
+            if (mOperation.isPaused()) {
+                mRestartButton.setVisibility(View.VISIBLE);
+            } else {
+                mPauseButton.setVisibility(View.VISIBLE);
+            }
         }
 
     }
@@ -121,19 +149,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         materialBuilder.show();
     }
 
+
     private void startService() {
         Intent intent = new Intent(MainActivity.this, BackgroundLocationService.class);
         startService(intent);
         mRecordButton.setVisibility(View.INVISIBLE);
         mStopButton.setVisibility(View.VISIBLE);
+        mPauseButton.setVisibility(View.VISIBLE);
         mRecordingText.setVisibility(View.VISIBLE);
     }
 
     private void stopService() {
         Intent intent = new Intent(MainActivity.this, BackgroundLocationService.class);
         stopService(intent);
+        mOperation.stopService();
         mRecordButton.setVisibility(View.VISIBLE);
         mStopButton.setVisibility(View.INVISIBLE);
+        mPauseButton.setVisibility(View.INVISIBLE);
+        mRestartButton.setVisibility(View.INVISIBLE);
         mRecordingText.setVisibility(View.INVISIBLE);
     }
 

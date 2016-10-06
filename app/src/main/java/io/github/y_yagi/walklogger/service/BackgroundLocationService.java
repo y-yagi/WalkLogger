@@ -27,10 +27,12 @@ import com.google.firebase.crash.FirebaseCrash;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 import io.github.y_yagi.walklogger.R;
 import io.github.y_yagi.walklogger.activity.MainActivity;
 import io.github.y_yagi.walklogger.model.GpsLog;
+import io.github.y_yagi.walklogger.model.LoggerState;
 import io.github.y_yagi.walklogger.model.Walk;
 import io.github.y_yagi.walklogger.util.LogUtil;
 import io.realm.Realm;
@@ -163,6 +165,10 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         }
 
         if (!isValidLocation(location)) return;
+        // TODO: remove
+        Log.e(TAG, "paused state: " + Boolean.toString(isPaused()));
+
+        if (isPaused()) return;
 
         Realm realm = Realm.getDefaultInstance();
         Walk walk = getWalk(realm);
@@ -229,5 +235,16 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         } else {
             return true;
         }
+    }
+
+    private boolean isPaused() {
+        boolean paused = false;
+        Realm realm = Realm.getDefaultInstance();
+
+        LoggerState loggerState = realm.where(LoggerState.class).findFirst();
+        if (loggerState != null && loggerState.getPause()) paused = true;
+
+        realm.close();
+        return paused;
     }
 }
