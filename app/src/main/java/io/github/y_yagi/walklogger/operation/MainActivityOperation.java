@@ -24,8 +24,7 @@ public class MainActivityOperation {
         mActiviy = activity;
 
         Realm.init(activity);
-        // TODO: remove deleteRealmIfMigration
-        RealmConfiguration config = new RealmConfiguration.Builder().deleteRealmIfMigrationNeeded().build();
+        RealmConfiguration config = new RealmConfiguration.Builder().build();
         Realm.setDefaultConfiguration(config);
         mRealm = Realm.getDefaultInstance();
     }
