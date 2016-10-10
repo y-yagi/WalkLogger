@@ -52,7 +52,7 @@ public class MainActivityTest {
         appCompatEditText3.perform(replaceText("てすと"), closeSoftKeyboard());
 
         ViewInteraction mDButton = onView(
-                allOf(withId(R.id.md_buttonDefaultPositive), withText("保存"), isDisplayed()));
+                allOf(withId(R.id.md_buttonDefaultPositive), isDisplayed()));
         mDButton.perform(click());
 
     }
