@@ -12,6 +12,9 @@ android {
         versionCode 1
         versionName "1.0"
         resValue "string", "google_maps_key", "\"${project.property("googleMapsKey")}\""
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        com.android.ddmlib.DdmPreferences.setTimeOut(60000)
     }
     buildTypes {
         release {
@@ -39,5 +42,10 @@ dependencies {
 
     compile 'com.github.markushi:circlebutton:1.1'
     compile 'com.afollestad.material-dialogs:core:0.9.0.2'
+
+    androidTestCompile "com.android.support:support-annotations:${play_services_lib_version}"
+    androidTestCompile 'com.android.support.test:runner:0.4.1'
+    androidTestCompile 'com.android.support.test:rules:0.4.1'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
 }
 apply plugin: 'com.google.gms.google-services'
