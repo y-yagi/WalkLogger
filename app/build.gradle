@@ -43,7 +43,7 @@ dependencies {
     compile 'com.github.markushi:circlebutton:1.1'
     compile 'com.afollestad.material-dialogs:core:0.9.0.2'
 
-    androidTestCompile 'com.android.support:support-annotations:23.0.1'
+    androidTestCompile "com.android.support:support-annotations:${play_services_lib_version}"
     androidTestCompile 'com.android.support.test:runner:0.4.1'
     androidTestCompile 'com.android.support.test:rules:0.4.1'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
