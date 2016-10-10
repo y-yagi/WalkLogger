@@ -28,13 +28,18 @@ android {
     }
 }
 
+configurations.all {
+    resolutionStrategy {
+        force "com.android.support:support-annotations:${support_lib_version}"
+    }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile "com.android.support:appcompat-v7:${support_lib_version}"
-    compile "com.android.support:cardview-v7:${support_lib_version}"
     compile "com.android.support:design:${support_lib_version}"
-    compile "com.android.support:appcompat-v7:${support_lib_version}"
+    compile "com.android.support:cardview-v7:${support_lib_version}"
     compile "com.google.android.gms:play-services-maps:${play_services_lib_version}"
     compile "com.google.android.gms:play-services-location:${play_services_lib_version}"
     compile "com.google.android.gms:play-services-drive:${play_services_lib_version}"
@@ -43,7 +48,7 @@ dependencies {
     compile 'com.github.markushi:circlebutton:1.1'
     compile 'com.afollestad.material-dialogs:core:0.9.0.2'
 
-    androidTestCompile "com.android.support:support-annotations:${play_services_lib_version}"
+    androidTestCompile "com.android.support:support-annotations:${support_lib_version}"
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile 'com.android.support.test:rules:0.5'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
