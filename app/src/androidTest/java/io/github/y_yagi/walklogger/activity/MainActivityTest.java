@@ -13,9 +13,12 @@ import org.junit.runner.RunWith;
 import io.github.y_yagi.walklogger.R;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.*;
-import static android.support.test.espresso.assertion.ViewAssertions.*;
-import static android.support.test.espresso.matcher.ViewMatchers.*;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static android.support.test.espresso.action.ViewActions.replaceText;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 
 @LargeTest
@@ -36,23 +39,19 @@ public class MainActivityTest {
         circleButton2.perform(click());
 
         ViewInteraction circleButton3 = onView(
-                allOf(withId(R.id.stop_button), isDisplayed()));
+                allOf(withId(R.id.restart_button), isDisplayed()));
         circleButton3.perform(click());
+
+        ViewInteraction circleButton4 = onView(
+                allOf(withId(R.id.stop_button), isDisplayed()));
+        circleButton4.perform(click());
 
         ViewInteraction appCompatEditText = onView(
                 allOf(withId(android.R.id.input), isDisplayed()));
-        appCompatEditText.perform(replaceText("てすと"), closeSoftKeyboard());
-
-        ViewInteraction appCompatEditText2 = onView(
-                allOf(withId(android.R.id.input), withText("てすと"), isDisplayed()));
-        appCompatEditText2.perform(click());
-
-        ViewInteraction appCompatEditText3 = onView(
-                allOf(withId(android.R.id.input), withText("てすと"), isDisplayed()));
-        appCompatEditText3.perform(replaceText("てすと"), closeSoftKeyboard());
+        appCompatEditText.perform(replaceText("test"), closeSoftKeyboard());
 
         ViewInteraction mDButton = onView(
-                allOf(withId(R.id.md_buttonDefaultPositive), isDisplayed()));
+                allOf(withId(R.id.md_buttonDefaultPositive), withText("Save"), isDisplayed()));
         mDButton.perform(click());
 
     }
