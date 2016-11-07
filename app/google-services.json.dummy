@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:2655555555555:android:6c998ee1ce81fec7",
         "android_client_info": {
-          "package_name": "xyz.yyagi.waklogger"
+          "package_name": "io.github.y_yagi.walklogger"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "xyz.yyagi.waklogger",
+            "package_name": "io.github.y_yagi.walklogger",
             "certificate_hash": "24"
           }
         },
