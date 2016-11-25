@@ -73,7 +73,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 new MarkerOptions().position(startPoint).title("Start").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
         );
         mMap.addMarker(new MarkerOptions().position(endPoint).title("End"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startPoint, 15));
+        if (mWalk.getEnd() != null) {
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startPoint, 15));
+        } else {
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(endPoint, 15));
+        }
         displayPolylines();
     }
 
