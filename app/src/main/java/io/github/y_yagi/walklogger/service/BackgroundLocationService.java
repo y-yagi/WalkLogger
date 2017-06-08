@@ -25,6 +25,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.firebase.crash.FirebaseCrash;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -78,7 +79,7 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         mTimeFormat = new SimpleDateFormat("yyyy-MM-d'T'HH:mm:ssZZZZZ");
 
         buildGoogleApiClient();
-        createWalk();
+        findOrCreateWalk();
 
         Intent intent = new Intent(this, MainActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -201,16 +202,38 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         stopLocationUpdates();
     }
 
-    private void createWalk() {
+    private void findOrCreateWalk() {
         Realm realm = Realm.getDefaultInstance();
+        Walk walk = findAbnormalTerminationWalk(realm);
+        if (walk != null) {
+            mUuid = walk.getUuid();
+            return;
+        }
+
         realm.beginTransaction();
         mUuid = UUID.randomUUID().toString();
-        Walk walk = realm.createObject(Walk.class, mUuid);
+        walk = realm.createObject(Walk.class, mUuid);
 
         Date d = new Date();
         walk.setStart(d);
         walk.setName(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(d));
         realm.commitTransaction();
+    }
+
+    private Walk findAbnormalTerminationWalk(Realm realm) {
+        Date date = new Date();
+
+        // NOTE: If data abnormally terminated within 30 minutes, continue to use.
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.MINUTE, -30);
+        Date thirtyMinutesBack = cal.getTime();
+
+        Walk walk = realm.where(Walk.class).greaterThan("end", thirtyMinutesBack).findFirst();
+        if (walk != null && walk.getEnd() == null) {
+            return walk;
+        }
+        return null;
     }
 
     private Walk getWalk(Realm realm) {
