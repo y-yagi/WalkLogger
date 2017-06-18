@@ -12,7 +12,6 @@
     <string name="nav_record">Record</string>
     <string name="nav_history">History</string>
 
-    <string name="recording">Now Recording...\nIf you want to see your location, please click on this text.</string>
     <string name="recording_finish_dialog_title">Set walk name</string>
     <string name="recording_finish_dialog_content">Default: saved time</string>
     <string name="recording_finish_positive">Save</string>

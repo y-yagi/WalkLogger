@@ -13,7 +13,6 @@
     <string name="nav_record">記録</string>
     <string name="nav_history">履歴</string>
 
-    <string name="recording">記録中です...\n現在位置を確認したい場合は、このテキストをクリックして下さい。</string>
     <string name="recording_finish_dialog_title">名前を入力</string>
     <string name="recording_finish_dialog_content">デフォルト: 保存日時</string>
     <string name="recording_finish_positive">保存</string>

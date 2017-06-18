@@ -20,20 +20,6 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:id="@+id/recording_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="@dimen/margin_large"
-        android:textSize="@dimen/text_xlarge"
-        android:text="@string/recording"
-        android:visibility="invisible"
-        android:textColor="@color/colorAccent"
-        android:clickable="true"
-        android:layout_below="@+id/record_button"
-        />
-
     <at.markushi.ui.CircleButton
         android:id="@+id/pause_button"
         android:layout_width="128dip"
