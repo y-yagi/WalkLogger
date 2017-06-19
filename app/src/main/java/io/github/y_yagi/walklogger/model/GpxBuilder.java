@@ -11,6 +11,7 @@ public class GpxBuilder {
 
     public String build() {
         String gpx = header();
+        gpx += wpt();
         gpx += trk();
         gpx += trkseg();
         for(GpsLog gpsLog : mWalk.gpsLogs) {
@@ -47,5 +48,17 @@ public class GpxBuilder {
 
     private String closeTags() {
         return "</trkseg>\n</trk>\n</gpx>";
+    }
+
+    private String wpt() {
+        String wpt = "";
+        /*
+<wpt lat="35.752334" lon="139.734866">
+  <name>テスト1</name>
+  <desc>テストだよ</desc>
+</wpt>
+        */
+        return wpt;
+
     }
 }

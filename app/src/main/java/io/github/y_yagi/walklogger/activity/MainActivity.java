@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CircleButton mStopButton;
     private CircleButton mPauseButton;
     private CircleButton mRestartButton;
+    private CircleButton mMarkButton;
     private MainActivityOperation mOperation;
     private Activity mActivity;
     private static final int NAV_POSITION = 0;
@@ -78,9 +79,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+        mMarkButton = (CircleButton) findViewById(R.id.mark_button);
+        mMarkButton.setOnClickListener(this);
+
         if (mOperation.isRecording()) {
             mRecordButton.setVisibility(View.INVISIBLE);
             mStopButton.setVisibility(View.VISIBLE);
+            mMarkButton.setVisibility(View.VISIBLE);
 
             if (mOperation.isPaused()) {
                 mRestartButton.setVisibility(View.VISIBLE);
@@ -104,6 +109,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
 
+        switch(view.getId()) {
+            case R.id.stop_button:
+                stop();
+                break;
+
+            case R.id.mark_button:
+                mark();
+        }
+    }
+
+    private void mark() {
+        MaterialDialog.Builder materialBuilder = new MaterialDialog.Builder(this);
+        materialBuilder.title(R.string.mark_dialog_title);
+        materialBuilder.content(R.string.mark_dialog_content);
+        materialBuilder.input(getString(R.string.waypoint_detail), "", true, new MaterialDialog.InputCallback() {
+            @Override
+            public void onInput(MaterialDialog dialog, CharSequence input) {
+                String detail = input.toString();
+                // TODO: save detail
+            }
+        });
+
+        materialBuilder.positiveText(R.string.mark_positive);
+        materialBuilder.neutralText(R.string.mark_neutral);
+        materialBuilder.show();
+    }
+
+    private void stop() {
         MaterialDialog.Builder materialBuilder = new MaterialDialog.Builder(this);
         materialBuilder.title(R.string.recording_finish_dialog_title);
         materialBuilder.content(R.string.recording_finish_dialog_content);
@@ -145,6 +178,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRecordButton.setVisibility(View.INVISIBLE);
         mStopButton.setVisibility(View.VISIBLE);
         mPauseButton.setVisibility(View.VISIBLE);
+        mMarkButton.setVisibility(View.VISIBLE);
     }
 
     private void stopService() {
@@ -155,6 +189,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mStopButton.setVisibility(View.INVISIBLE);
         mPauseButton.setVisibility(View.INVISIBLE);
         mRestartButton.setVisibility(View.INVISIBLE);
+        mMarkButton.setVisibility(View.INVISIBLE);
     }
 
     private void setupDrawerAndToolBar() {

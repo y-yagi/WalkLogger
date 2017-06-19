@@ -53,4 +53,15 @@
         android:layout_alignTop="@+id/record_button"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="27dp" />
+
+    <at.markushi.ui.CircleButton
+        android:id="@+id/mark_button"
+        android:layout_width="128dip"
+        android:layout_height="128dip"
+        app:cb_color="@color/buttonMark"
+        android:visibility="invisible"
+        android:src="@drawable/ic_collections_bookmark_white_48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/record_button"
+        android:layout_marginBottom="36dp" />
 </RelativeLayout>
