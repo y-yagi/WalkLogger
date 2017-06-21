@@ -91,10 +91,9 @@ public class MainActivityOperation {
 
     public void saveWaypoint(String memo) {
         Walk walk = getWalk();
+        if (walk.gpsLogs.isEmpty()) return;
+
         GpsLog gpsLog = walk.gpsLogs.last();
-        if (gpsLog == null) {
-            return;
-        }
 
         mRealm.beginTransaction();
         String uuid = UUID.randomUUID().toString();
