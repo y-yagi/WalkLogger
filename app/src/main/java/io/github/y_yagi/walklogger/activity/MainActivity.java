@@ -123,12 +123,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         MaterialDialog.Builder materialBuilder = new MaterialDialog.Builder(this);
         materialBuilder.title(R.string.mark_dialog_title);
         materialBuilder.content(R.string.mark_dialog_content);
-        materialBuilder.input(getString(R.string.waypoint_detail), "", true, new MaterialDialog.InputCallback() {
+        materialBuilder.input(getString(R.string.waypoint_memo), "", true, new MaterialDialog.InputCallback() {
             @Override
             public void onInput(MaterialDialog dialog, CharSequence input) {
-                String detail = input.toString();
-                if (!detail.isEmpty()) {
-                  mOperation.saveWaypoint(detail);
+                String memo = input.toString();
+                if (!memo.isEmpty()) {
+                  mOperation.saveWaypoint(memo);
                 }
             }
         });

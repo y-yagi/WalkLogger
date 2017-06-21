@@ -28,7 +28,7 @@ public class MainActivityOperation {
 
         Realm.init(activity);
         // TODO: remove before merge
-        RealmConfiguration config = new RealmConfiguration.Builder().name("waypoint3").build();
+        RealmConfiguration config = new RealmConfiguration.Builder().name("waypoint4").build();
         Realm.setDefaultConfiguration(config);
         mRealm = Realm.getDefaultInstance();
     }
@@ -89,7 +89,7 @@ public class MainActivityOperation {
         return paused;
     }
 
-    public void saveWaypoint(String detail) {
+    public void saveWaypoint(String memo) {
         Walk walk = getWalk();
         GpsLog gpsLog = walk.gpsLogs.last();
         if (gpsLog == null) {
@@ -101,7 +101,7 @@ public class MainActivityOperation {
         Waypoint waypoint = mRealm.createObject(Waypoint.class, uuid);
         waypoint.setLatitude(gpsLog.getLatitude());
         waypoint.setLongitude(gpsLog.getLongitude());
-        waypoint.setDetail(detail);
+        waypoint.setMemo(memo);
         walk.waypoints.add(waypoint);
         mRealm.commitTransaction();
     }

@@ -9,7 +9,7 @@
     <string name="cancel">キャンセル</string>
 
     <string name="walk_name">名前</string>
-    <string name="waypoint_detail">詳細</string>
+    <string name="waypoint_memo">メモ</string>
 
     <string name="nav_record">記録</string>
     <string name="nav_history">履歴</string>

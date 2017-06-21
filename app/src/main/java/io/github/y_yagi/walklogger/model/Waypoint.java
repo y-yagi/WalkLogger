@@ -10,7 +10,7 @@ import io.realm.annotations.PrimaryKey;
 public class Waypoint extends RealmObject {
     @PrimaryKey
     private String uuid;
-    private String detail;
+    private String memo;
     private double latitude;
     private double longitude;
 
@@ -28,9 +28,9 @@ public class Waypoint extends RealmObject {
         this.uuid = uuid;
     }
 
-    public void setDetail(String detail) {
-        this.detail = detail;
+    public void setMemo(String memo) {
+        this.memo = memo;
     }
-    public String getDetail() { return this.detail; }
+    public String getMemo() { return this.memo; }
 
 }

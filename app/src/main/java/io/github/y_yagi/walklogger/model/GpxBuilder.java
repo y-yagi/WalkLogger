@@ -57,7 +57,7 @@ public class GpxBuilder {
 
         for (Waypoint waypoint: mWalk.waypoints) {
             wpt += String.format("<wpt lat=\"%f\" lon=\"%f\">\n", waypoint.getLatitude(), waypoint.getLongitude());
-            wpt += String.format("<desc>%s</desc>\n", waypoint.getDetail());
+            wpt += String.format("<name>%s</name>\n", waypoint.getMemo());
             wpt += "</wpt>";
         }
 

@@ -8,7 +8,7 @@
     <string name="cancel">Cancel</string>
 
     <string name="walk_name">walk name</string>
-    <string name="waypoint_detail">detail</string>
+    <string name="waypoint_memo">memo</string>
 
     <string name="nav_record">Record</string>
     <string name="nav_history">History</string>
