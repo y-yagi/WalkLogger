@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,6 +16,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -120,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void mark() {
+        final View view = findViewById(R.id.drawer_layout);
         MaterialDialog.Builder materialBuilder = new MaterialDialog.Builder(this);
         materialBuilder.title(R.string.mark_dialog_title);
         materialBuilder.content(R.string.mark_dialog_content);
@@ -127,9 +130,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onInput(MaterialDialog dialog, CharSequence input) {
                 String memo = input.toString();
-                if (!memo.isEmpty()) {
-                  mOperation.saveWaypoint(memo);
-                }
+                if (memo.isEmpty()) return;
+
+                mOperation.saveWaypoint(memo);
+                Snackbar snackbar = Snackbar.make(view, R.string.save_mark, Snackbar.LENGTH_SHORT);
+                snackbar.show();
+
             }
         });
 

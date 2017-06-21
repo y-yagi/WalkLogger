@@ -37,4 +37,5 @@
     <string name="mark_dialog_content">Please input detail</string>
     <string name="mark_positive">Save</string>
     <string name="mark_neutral">Cancel</string>
+    <string name="save_mark">Save memo</string>
 </resources>

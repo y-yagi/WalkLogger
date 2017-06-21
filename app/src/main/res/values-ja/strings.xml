@@ -38,4 +38,5 @@
     <string name="mark_dialog_content">詳細を入力してください</string>
     <string name="mark_positive">保存</string>
     <string name="mark_neutral">キャンセル</string>
+    <string name="save_mark">メモを保存しました</string>
 </resources>
