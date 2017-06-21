@@ -21,6 +21,7 @@ public class Walk extends RealmObject {
     private Date start;
     private Date end;
     public RealmList<GpsLog> gpsLogs;
+    public RealmList<Waypoint> waypoints;
 
     public String duration() {
         String durationStr = DateUtil.formatWithTime(this.start) + " 〜 ";

@@ -52,12 +52,15 @@ public class GpxBuilder {
 
     private String wpt() {
         String wpt = "";
-        /*
-<wpt lat="35.752334" lon="139.734866">
-  <name>テスト1</name>
-  <desc>テストだよ</desc>
-</wpt>
-        */
+        if (mWalk.waypoints.isEmpty()) return wpt;
+
+
+        for (Waypoint waypoint: mWalk.waypoints) {
+            wpt += String.format("<wpt lat=\"%f\" lon=\"%f\">\n", waypoint.getLatitude(), waypoint.getLongitude());
+            wpt += String.format("<desc>%s</desc>\n", waypoint.getDetail());
+            wpt += "</wpt>";
+        }
+
         return wpt;
 
     }

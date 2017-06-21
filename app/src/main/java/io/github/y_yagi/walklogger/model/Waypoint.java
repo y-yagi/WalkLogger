@@ -17,10 +17,12 @@ public class Waypoint extends RealmObject {
     public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
+    public double getLatitude() { return this.latitude; }
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
+    public double getLongitude() { return this.longitude; }
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
@@ -29,4 +31,6 @@ public class Waypoint extends RealmObject {
     public void setDetail(String detail) {
         this.detail = detail;
     }
+    public String getDetail() { return this.detail; }
+
 }
