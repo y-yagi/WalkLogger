@@ -127,7 +127,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onInput(MaterialDialog dialog, CharSequence input) {
                 String detail = input.toString();
-                // TODO: save detail
+                if (!detail.isEmpty()) {
+                  mOperation.saveWaypoint(detail);
+                }
             }
         });
 
