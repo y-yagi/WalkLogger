@@ -55,6 +55,7 @@ public class MainActivityOperation {
 
         mRealm.beginTransaction();
         walk.gpsLogs.deleteAllFromRealm();
+        walk.waypoints.deleteAllFromRealm();
         walk.deleteFromRealm();
         mRealm.commitTransaction();
     }
