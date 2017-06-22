@@ -74,8 +74,7 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         NotificationManager notificationManager;
         Realm.init(this);
 
-        // TODO: remove before merge
-        RealmConfiguration config = new RealmConfiguration.Builder().name("waypoint4").build();
+        RealmConfiguration config = new RealmConfiguration.Builder().build();
         Realm.setDefaultConfiguration(config);
         mTimeFormat = new SimpleDateFormat("yyyy-MM-d'T'HH:mm:ssZZZZZ");
 

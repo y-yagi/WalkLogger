@@ -27,8 +27,7 @@ public class MainActivityOperation {
         mActiviy = activity;
 
         Realm.init(activity);
-        // TODO: remove before merge
-        RealmConfiguration config = new RealmConfiguration.Builder().name("waypoint4").build();
+        RealmConfiguration config = new RealmConfiguration.Builder().build();
         Realm.setDefaultConfiguration(config);
         mRealm = Realm.getDefaultInstance();
     }
