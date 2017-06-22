@@ -20,20 +20,6 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:id="@+id/recording_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="@dimen/margin_large"
-        android:textSize="@dimen/text_xlarge"
-        android:text="@string/recording"
-        android:visibility="invisible"
-        android:textColor="@color/colorAccent"
-        android:clickable="true"
-        android:layout_below="@+id/record_button"
-        />
-
     <at.markushi.ui.CircleButton
         android:id="@+id/pause_button"
         android:layout_width="128dip"
@@ -67,4 +53,15 @@
         android:layout_alignTop="@+id/record_button"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="27dp" />
+
+    <at.markushi.ui.CircleButton
+        android:id="@+id/mark_button"
+        android:layout_width="128dip"
+        android:layout_height="128dip"
+        app:cb_color="@color/buttonMark"
+        android:visibility="invisible"
+        android:src="@drawable/ic_collections_bookmark_white_48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/record_button"
+        android:layout_marginBottom="36dp" />
 </RelativeLayout>

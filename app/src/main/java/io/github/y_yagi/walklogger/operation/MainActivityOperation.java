@@ -4,9 +4,13 @@ import android.app.Activity;
 
 import java.util.Date;
 import java.util.MissingResourceException;
+import java.util.UUID;
 
+import io.github.y_yagi.walklogger.model.GpsLog;
 import io.github.y_yagi.walklogger.model.LoggerState;
+import io.github.y_yagi.walklogger.model.Migration;
 import io.github.y_yagi.walklogger.model.Walk;
+import io.github.y_yagi.walklogger.model.Waypoint;
 import io.github.y_yagi.walklogger.service.BackgroundLocationService;
 import io.github.y_yagi.walklogger.util.ServiceUtil;
 import io.realm.Realm;
@@ -24,7 +28,7 @@ public class MainActivityOperation {
         mActiviy = activity;
 
         Realm.init(activity);
-        RealmConfiguration config = new RealmConfiguration.Builder().build();
+        RealmConfiguration config = new RealmConfiguration.Builder().schemaVersion(2).migration(new Migration()).build();
         Realm.setDefaultConfiguration(config);
         mRealm = Realm.getDefaultInstance();
     }
@@ -51,6 +55,7 @@ public class MainActivityOperation {
 
         mRealm.beginTransaction();
         walk.gpsLogs.deleteAllFromRealm();
+        walk.waypoints.deleteAllFromRealm();
         walk.deleteFromRealm();
         mRealm.commitTransaction();
     }
@@ -83,5 +88,21 @@ public class MainActivityOperation {
         LoggerState loggerState = mRealm.where(LoggerState.class).findFirst();
         if (loggerState != null && loggerState.getPause()) paused = true;
         return paused;
+    }
+
+    public void saveWaypoint(String memo) {
+        Walk walk = getWalk();
+        if (walk.gpsLogs.isEmpty()) return;
+
+        GpsLog gpsLog = walk.gpsLogs.last();
+
+        mRealm.beginTransaction();
+        String uuid = UUID.randomUUID().toString();
+        Waypoint waypoint = mRealm.createObject(Waypoint.class, uuid);
+        waypoint.setLatitude(gpsLog.getLatitude());
+        waypoint.setLongitude(gpsLog.getLongitude());
+        waypoint.setMemo(memo);
+        walk.waypoints.add(waypoint);
+        mRealm.commitTransaction();
     }
 }

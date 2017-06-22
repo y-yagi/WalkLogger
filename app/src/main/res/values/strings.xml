@@ -8,11 +8,11 @@
     <string name="cancel">Cancel</string>
 
     <string name="walk_name">walk name</string>
+    <string name="waypoint_memo">memo</string>
 
     <string name="nav_record">Record</string>
     <string name="nav_history">History</string>
 
-    <string name="recording">Now Recording...\nIf you want to see your location, please click on this text.</string>
     <string name="recording_finish_dialog_title">Set walk name</string>
     <string name="recording_finish_dialog_content">Default: saved time</string>
     <string name="recording_finish_positive">Save</string>
@@ -32,4 +32,10 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="export_complete">File exported</string>
+
+    <string name="mark_dialog_title">Write down where you are now</string>
+    <string name="mark_dialog_content">Please input detail</string>
+    <string name="mark_positive">Save</string>
+    <string name="mark_neutral">Cancel</string>
+    <string name="save_mark">Save memo</string>
 </resources>

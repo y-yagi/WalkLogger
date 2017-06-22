@@ -10,6 +10,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -18,6 +19,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import io.github.y_yagi.walklogger.R;
 import io.github.y_yagi.walklogger.model.GpsLog;
 import io.github.y_yagi.walklogger.model.Walk;
+import io.github.y_yagi.walklogger.model.Waypoint;
 import io.realm.Realm;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -79,6 +81,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(endPoint, 15));
         }
         displayPolylines();
+        displayWaypoints();
     }
 
     private void setWalk() {
@@ -94,5 +97,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             rectOptions = rectOptions.add(new LatLng(gpsLog.getLatitude(), gpsLog.getLongitude()));
         }
         mMap.addPolyline(rectOptions);
+    }
+
+    private void displayWaypoints() {
+        BitmapDescriptor icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE);
+        LatLng point;
+
+        for(Waypoint waypoint : mWalk.waypoints) {
+            point = new LatLng(waypoint.getLatitude(), waypoint.getLongitude());
+            mMap.addMarker(new MarkerOptions().position(point).title(waypoint.getMemo()).icon(icon));
+        }
     }
 }
