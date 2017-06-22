@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import io.github.y_yagi.walklogger.model.GpsLog;
 import io.github.y_yagi.walklogger.model.LoggerState;
+import io.github.y_yagi.walklogger.model.Migration;
 import io.github.y_yagi.walklogger.model.Walk;
 import io.github.y_yagi.walklogger.model.Waypoint;
 import io.github.y_yagi.walklogger.service.BackgroundLocationService;
@@ -27,7 +28,7 @@ public class MainActivityOperation {
         mActiviy = activity;
 
         Realm.init(activity);
-        RealmConfiguration config = new RealmConfiguration.Builder().build();
+        RealmConfiguration config = new RealmConfiguration.Builder().schemaVersion(2).migration(new Migration()).build();
         Realm.setDefaultConfiguration(config);
         mRealm = Realm.getDefaultInstance();
     }

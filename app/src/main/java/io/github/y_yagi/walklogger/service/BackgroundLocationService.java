@@ -34,6 +34,7 @@ import io.github.y_yagi.walklogger.R;
 import io.github.y_yagi.walklogger.activity.MainActivity;
 import io.github.y_yagi.walklogger.model.GpsLog;
 import io.github.y_yagi.walklogger.model.LoggerState;
+import io.github.y_yagi.walklogger.model.Migration;
 import io.github.y_yagi.walklogger.model.Walk;
 import io.github.y_yagi.walklogger.util.LogUtil;
 import io.realm.Realm;
@@ -74,7 +75,7 @@ public class BackgroundLocationService extends Service implements GoogleApiClien
         NotificationManager notificationManager;
         Realm.init(this);
 
-        RealmConfiguration config = new RealmConfiguration.Builder().build();
+        RealmConfiguration config = new RealmConfiguration.Builder().schemaVersion(2).migration(new Migration()).build();
         Realm.setDefaultConfiguration(config);
         mTimeFormat = new SimpleDateFormat("yyyy-MM-d'T'HH:mm:ssZZZZZ");
 
