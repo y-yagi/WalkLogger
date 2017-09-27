@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CircleButton mPauseButton;
     private CircleButton mRestartButton;
     private CircleButton mMarkButton;
+    private CircleButton mMapButton;
     private MainActivityOperation mOperation;
     private Activity mActivity;
     private static final int NAV_POSITION = 0;
@@ -84,10 +85,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mMarkButton = (CircleButton) findViewById(R.id.mark_button);
         mMarkButton.setOnClickListener(this);
 
+        mMapButton = (CircleButton) findViewById(R.id.map_button);
+        mMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Walk walk = mOperation.getWalk();
+                MapsActivity.startActivity(mActivity, walk.getUuid());
+            }
+        });
+
+
         if (mOperation.isRecording()) {
             mRecordButton.setVisibility(View.INVISIBLE);
             mStopButton.setVisibility(View.VISIBLE);
             mMarkButton.setVisibility(View.VISIBLE);
+            mMapButton.setVisibility(View.VISIBLE);
 
             if (mOperation.isPaused()) {
                 mRestartButton.setVisibility(View.VISIBLE);
@@ -187,6 +199,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mStopButton.setVisibility(View.VISIBLE);
         mPauseButton.setVisibility(View.VISIBLE);
         mMarkButton.setVisibility(View.VISIBLE);
+        mMapButton.setVisibility(View.VISIBLE);
     }
 
     private void stopService() {
@@ -198,6 +211,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mPauseButton.setVisibility(View.INVISIBLE);
         mRestartButton.setVisibility(View.INVISIBLE);
         mMarkButton.setVisibility(View.INVISIBLE);
+        mMapButton.setVisibility(View.INVISIBLE);
     }
 
     private void setupDrawerAndToolBar() {

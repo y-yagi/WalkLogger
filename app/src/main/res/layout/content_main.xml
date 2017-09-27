@@ -61,7 +61,17 @@
         app:cb_color="@color/buttonMark"
         android:visibility="invisible"
         android:src="@drawable/ic_collections_bookmark_white_48dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/record_button"
-        android:layout_marginBottom="36dp" />
+        android:layout_alignTop="@+id/map_button"
+        android:layout_alignStart="@+id/pause_button" />
+
+    <at.markushi.ui.CircleButton
+        android:id="@+id/map_button"
+        android:layout_width="128dip"
+        android:layout_height="128dip"
+        android:layout_marginTop="27dp"
+        android:src="@drawable/ic_map_white_48dp"
+        android:visibility="invisible"
+        app:cb_color="@color/buttonMap"
+        android:layout_below="@+id/record_button"
+        android:layout_alignStart="@+id/stop_button" />
 </RelativeLayout>
