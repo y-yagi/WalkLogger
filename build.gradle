@@ -4,6 +4,7 @@ apply plugin: 'com.github.ben-manes.versions'
 
 buildscript {
     repositories {
+        google()
         jcenter()
     }
     dependencies {
@@ -31,8 +32,8 @@ dependencyUpdates.resolutionStrategy = {
 
 allprojects {
     repositories {
-        jcenter()
         google()
+        jcenter()
     }
 }
 
