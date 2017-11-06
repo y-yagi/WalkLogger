@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 27
     buildToolsVersion '26.0.2'
 
     defaultConfig {
         applicationId "io.github.y_yagi.walklogger"
         minSdkVersion 17
-        targetSdkVersion 23
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         resValue "string", "google_maps_key", "\"${project.property("googleMapsKey")}\""
@@ -38,6 +38,6 @@ dependencies {
     compile "com.google.firebase:firebase-crash:${play_services_lib_version}"
 
     compile 'com.github.markushi:circlebutton:1.1'
-    compile 'com.afollestad.material-dialogs:core:0.9.4.6'
+    compile 'com.afollestad.material-dialogs:core:0.9.5.0'
 }
 apply plugin: 'com.google.gms.google-services'
