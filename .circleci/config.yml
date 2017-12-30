@@ -27,8 +27,7 @@ jobs:
           name: Check dependencyUpdates
           command: ./gradlew dependencyUpdates -Drevision=release -DoutputFormatter=json
       - store_artifacts:
-          path: app/build/reports
-          destination: reports
+          path: build/dependencyUpdates
       - store_test_results:
           path: app/build/test-results
 
